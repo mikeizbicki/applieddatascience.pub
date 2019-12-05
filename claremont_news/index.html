@@ -1,0 +1,411 @@
+<!doctype html>
+<meta charset="utf-8">
+<script src="../template.js"></script>
+<script type="text/javascript" async src=img/"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['\\(','\\)']]}
+});
+</script>
+
+<script type="text/front-matter">
+  title: "Editorial Bias in Claremont Student Newspapers"
+  publishedDate: 2019-12-05
+  description: "Description of the post"
+  authors:
+  - Mike Izbicki: https://izbicki.me
+  affiliations:
+  - Mathematical Sciences, Claremont McKenna College: https://cmc.edu/math
+</script>
+
+<dt-article>
+<h1>Editorial Bias in Claremont Student Newspapers</h1>
+<!--<h2>These are notes about analyzing the student newspapers from the Claremont Colleges</h2>-->
+<!--<dt-tldr><b>tl;dr</b> test </dt-tldr>-->
+<p>
+<strong>tl;dr</strong>
+I used natural language processing (NLP) algorithms to analyze the five student newspapers of the Claremont Colleges.
+Highlights of the analysis include that <em>The Scripps Voice</em> has the most objective reporting,
+<!--<em>The CMC Forum</em> has the best photo essays;-->
+<!--<em>The Student Life</em> covers the most diversity of topics;-->
+<!--<em>The Claremont Independent</em> has a reading level more than 1.5 grades higher than the other papers;-->
+and that nobody likes to write articles about Harvey Mudd College.
+</p>
+<!--
+  <style id="distill-manual-toc">
+    /* TOC */
+    #contents nav a {
+      color: rgba(0, 0, 0, 0.8);
+      border-bottom: none;
+      text-decoration: none;
+    }
+
+    #contents nav ul li {
+      margin-bottom: .25em;
+    }
+
+    #contents nav a:hover {
+      text-decoration: underline solid rgba(0, 0, 0, 0.6);
+    }
+
+    #contents nav ul {
+      margin-top: 0;
+      margin-bottom: 6px;
+    }
+
+
+    #contents nav>div {
+      display: block;
+      outline: none;
+      margin-bottom: 0.5em;
+    }
+
+    #contents nav>div>a {
+      font-size: 13px;
+      font-weight: 600;
+    }
+  </style>
+  -->
+
+<dt-byline></dt-byline>
+
+<!--
+  <div id="contents" class="base-grid" style="border-top: 1px solid #eee; padding: 1.5rem 0;">
+    <nav class="l-text toc figcaption">
+      <h3>Contents</h3>
+      <div><a href="#overview">Overview of the article</a></div>
+      <div><a href="#problem-setup">Problem setup</a></div>
+      <div><a href="#single-path-networks">Single-path networks</a></div>
+      <ul>
+        <li><a href="#computing-receptive-field-size">Computing receptive field size</a></li>
+        <li><a href="#computing-receptive-field-region">Computing receptive field region in input image</a></li>
+      </ul>
+      <div><a href="#arbitrary-computation-graphs">Arbitrary computation graphs</a></div>
+      <div><a href="#discussion">Discussion: receptive fields of modern networks</a></div>
+    </nav>
+  </div>
+-->
+
+<h3>The Problem</h3>
+<p>
+The Claremont Colleges have 5 student newspapers:
+<a href=https://tsl.news>The Student Life (TSL)</a>,
+<a href=https://thescrippsvoice.com >The Scripps Voice</a>,
+<a href=https://www.thegoldenantlers.com >The Golden Antlers</a>,
+<a href=https://cmcforum.com >The CMC Forum</a>,
+and
+<a href=https://claremontindependent.com >The Claremont Independent</a>.
+All together, they have published more than 7000 articles online.
+That's far too many articles for any one person to read and analyze,
+and so the goal of this project is to write a Python program to analyze these articles automatically.
+<!--By writing a Python program, however, I was able to analyze all of these articles in seconds,-->
+<!--and identify the most interesting articles from each publication.-->
+<!--By reading only these selected articles in depth, I was able to quickly get a sense of the Claremont student community.-->
+</p>
+<!--
+<p>
+I'm a new professor at Claremont McKenna College,
+and I do research and teach classes on data science.
+To help myself better understand student life in Claremont, 
+I decided to use my data science skills to analyze the local student newspapers.
+I'm writing up my findings here in order to illustrate some of the power of the techniques.
+</p>
+-->
+
+<!--
+<a href=>The Data</a>
+<a href=>Writing Style Analysis</a>
+<a href=>Subjectivity Analysis</a>
+<a href=>Supervised Topic Analysis</a>
+<a href=>Unsupervised Topic Analysis</a>
+<a href=>Conclusion</a>
+-->
+
+<h3>The Data</h3>
+<!--
+</p>
+<ol>
+    <li><a href=https://tsl.news>The Student Life (TSL)</a> is the official student newspaper for the Claremont Colleges</li>
+    <li><a href=https://claremontindependent.com >The Claremont Independent</a> is an independent student newspaper for all five colleges</li>
+    <li><a href=https://thescrippsvoice.com >The Scripps Voice</a> is a smaller newspaper dedicated to the all-women <a href=https://scripps.edu>Scripps</a> college</li>
+    <li><a href=https://cmcforum.com >The CMC Forum</a> is dedicated to <a href=https://cmc.edu>Claremont McKenna College</a></li>
+    <li><a href=https://www.thegoldenantlers.com >The Golden Antlers</a> is a satirical newspaper for all five colleges</li>
+</ol>
+-->
+<!--
+<table cellpadding=5pt>
+    <tr><td><strong>Newspaper</strong></td><td><strong>Description</strong></td></tr>
+    <tr><td><a href=https://tsl.news>The Student Life (TSL)</a></td><td>The official student newspaper for all five colleges</td></tr>
+    <tr><td><a href=https://claremontindependent.com >The Claremont Independent</a></td><td>An independent student newspaper for all five colleges</td></tr>
+    <tr><td><a href=https://thescrippsvoice.com >The Scripps Voice</a></td><td>Focuses on <a href=https://scripps.edu>Scripps</a>, an all-women's college</td></tr>
+    <tr><td><a href=https://cmcforum.com >The CMC Forum</a></td><td>Focuses on <a href=https://cmc.edu>Claremont McKenna College</a></td></tr>
+    <tr><td><a href=https://www.thegoldenantlers.com >The Golden Antlers</a></td><td>A satirical newspaper for all five colleges</td></tr>
+</table>
+-->
+<p>
+I used the <a href='https://github.com/mikeizbicki/NovichenkoBot'>NovichenkoBot</a> web scraper <dt-cite key='izbicki2019novichenkobot'></dt-cite> to download all the articles that the Claremont student newspapers have ever published online.
+NovichenkoBot is a tool that I wrote as part of a larger research project for analyzing the bias in online news.
+It takes a newspaper's web address as input (e.g. <a href='https://tsl.news'>https://tsl.news</a> for <em>TSL</em>),
+downloads the newspaper's entire website,
+and then extracts all the articles from the website.<dt-fn>The process of extracting articles from a website is surprisingly difficult because not all URLs on a domain correspond to a unique article.  For example, the URL <a href=https://tsl.news/category/life-and-style/>https://tsl.news/category/life-and-style/</a> is not an article for <em>TSL</em>, but rather a list of articles.  The NovichenkoBot program is able to identify that this fact and does not include the contents of these pages in the list of articles.  The NovichenkoBot is also able to identify ads and other content that is not part of the article's main body of text, and ensures that these extraneous pieces of information are not included in the analysis. </dt-fn>
+For each article, the program also outputs lots of metadata like the date that the article was published.
+The following plot shows the total number of articles published by Claremont student newspapers in recent years:<dt-fn>
+    <em>TSL</em> has been publishing continuously since 1889, 
+but their webpage only contains articles going back to 2008.
+</dt-fn>
+</p>
+<img class=l-body src=img/articles_per_year.png >
+<p>
+From this plot, we can easily see that <em>TSL</em> is the most active of the student newspapers.
+Another interesting trend is that <em>The CMC Forum</em> has been publishing fewer articles every year since 2013.
+This is the year that <em>The Claremont Independent</em> was founded,
+and so it seems likely that many of the writers who would have otherwise contributed to <em>The Forum</em> are contributing to <em>The Independent</em> instead.
+</p>
+
+<h3>Writing Style Analysis</h3>
+<p>
+I began my analysis by calculating some simple statistics about the articles each paper publishes.
+The following two figures use <a href=https://en.wikipedia.org/wiki/Box_plot>box and whisker plots</a> to show the typical number of words in the titles and bodies of the articles for each paper.
+The yellow bar indicates the median<dt-fn>The "median length" is a better measure than the "average length" of titles/bodies for our purposes because it is less susceptible to outliers.  In particular, it gives us a good idea of the length of a "typical" article we might read from each paper if we picked one at random.</dt-fn> number of words in an article's title or body.
+</p>
+<img class=l-body src=img/articles_stats_title_words.png >
+<img class=l-body src=img/articles_stats_body_words.png  >
+<p>
+The first thing I noticed about these plots is that <em>The Golden Antlers</em> has the longest titles and the shortest articles.
+This makes sense because they are a satire paper,
+and the main joke of each article is in the article's click-baity title.
+</p>
+<p>
+I also noticed a similar trend in Claremont's two consortium-wide non-satirical papers.
+Compared with <em>TSL</em>, <em>The Independent</em> uses fewer words in their titles but has longer stories.
+This suggested to me that <em>The Independent</em> is likely to have a more academic and in depth writing style, whereas <em>TSL</em> is likely to focus more on traditional journalism.
+</p>
+<p>
+To test this hypothesis, I used Python's <a href=https://pypi.org/project/textstat/>textstat</a> library to calculate the <a href=https://en.wikipedia.org/wiki/Coleman%E2%80%93Liau_index>Coleman-Liau Index</a><dt-cite key=coleman1975computer></dt-cite> for each document,
+which estimates the "grade level" of the document.
+As before, I plotted the results with a box and whisker plot:
+
+<!--
+<dt-fn>
+We measured the articles' writing levels using Python's textstat library.
+The library includes many other measures of readability.
+These measures of readability essentially all agree with the Coleman-Liau Index listed in the main body of the paper,
+but they are slightly more difficult to interpret.
+For completeness, they are reported below.
+<img width=600px src=img/articles_stats_automated_readability_index.png>
+<img width=600px src=img/articles_stats_dale_chall_readability_score.png>
+<img width=600px src=img/articles_stats_flesch_kincaid_grade.png>
+<img width=600px src=img/articles_stats_flesch_reading_ease.png>
+<img width=600px src=img/articles_stats_gunning_fog.png>
+<img width=600px src=img/articles_stats_linsear_write_formula.png>
+<img width=600px src=img/articles_stats_smog_index.png>
+<img width=600px src=img/articles_stats_text_standard.png>
+</dt-fn>
+-->
+</p>
+<img class=l-body src=img/articles_stats_coleman_liau_index.png >
+<p>
+We can see that the typical article in <em>The Independent</em> is written at a level roughly 1.5 grades higher than <em>TSL</em>,
+and more than two grade levels high than the other papers.
+</p>
+<p>
+This advanced reading level is not due to longer or more complex sentences.
+As seen below, <em>The Independent</em> and <em>TSL</em> have similar sentence lengths,
+with <em>TSL</em> actually being slightly longer.
+</p>
+<img class=l-body src=img/articles_stats_body_words_per_body_sentence_count.png >
+<p>
+Instead, it is due to the use of larger, more difficult words.
+The words in <em>The Independent</em> average 0.25 more syllables.<dt-fn>This average is calculated after removing stop words, which are words like `a` and `the` which occur commonly in English and have little semantic meaning.</dt-fn> 
+</p>
+<img class=l-body src=img/articles_stats_difficult_words.png >
+<img class=l-body src=img/articles_stats_body_syllable_count_per_(1.0*body_words+0.01).png >
+<!--<p>This is the first paragraph of the article.</p>-->
+<!--<p>We can also cite <dt-cite key="gregor2015draw"></dt-cite> external publications. <dt-fn>This will become a hoverable footnote.</dt-fn></p>-->
+<!--<p>You can include inline math using the dollar sign to get \(x=2\) or the double dollar to get full equations-->
+<!--$$-->
+<!--\ell(\mathbb x;\mathbb w) = \log(1+\exp(\mathbb x^T \mathbb w))-->
+<!--$$-->
+<!--<p>This is a code block, but you should use them very sparingly.</p>-->
+<!--<dt-code block language="javascript">-->
+<!--var x = 25;-->
+<!--function(x){-->
+<!--return x * x;-->
+<!--}-->
+<!--</dt-code>-->
+<p>
+Is the advanced writing level of <em>The Independent</em> a sign that they are writing better articles that contain more nuanced discussion?
+Or is it a sign that they're making obfuscated arguments that are intentionally confusing?
+These are questions that, unfortunately, a machine can't answer for us.
+</p>
+
+<!--
+<h4>
+Polarity
+</h4>
+<img class=l-body src=img/articles_stats_body_polarity.png >
+<img class=l-body src=img/articles_stats_title_polarity.png >
+
+<p>
+The three mosts positive posts from The Golden Antlers:
+<ol>
+    <li><a href='https://www.thegoldenantlers.com/cmc-the-best-god-damn-campus-in-america/'>CMC: The Best God-Damn Campus in America</a></li>
+    <li><a href='https://www.thegoldenantlers.com/impressive-first-year-pomona-class-includes-jesus-christ-himself'>Impressive First-Year Pomona Class Includes Jesus Christ himself</a></li>
+    <li><a href='https://www.thegoldenantlers.com/princeton-review-rates-claremont-mckenna-2-in-best-sat-scandal'>Princeton Review Rates Claremont McKenna “#2” in “Best SAT Scandal”</a></li>
+</ol>
+</p>
+<p>
+And the three most negative:
+<ol>
+    <li><a href='https://www.thegoldenantlers.com/the-honnold-mudd-library-staff-will-no-longer-be-answering-stupid-ass-questions'>The Honnold-Mudd Library Staff Will No Longer be Answering Stupid Ass Questions</a></li>
+    <li><a href='https://www.thegoldenantlers.com/california-faces-worst-drought-in-500-years'>California Faces Worst Drought in 500 Years</a></li>
+    <li><a href='https://www.thegoldenantlers.com/tea-time-turns-violent/?snax_login_popup'>Tea Time turns Violent</a></li>
+</ol>
+</p>
+-->
+
+<h3>Subjectivity Analysis</h3>
+<p>
+The best newspapers report facts in a neutral, objective way.
+<a href=https://en.wikipedia.org/wiki/Sentiment_analysis#Subjectivity/objectivity_identification>Subjectivity analysis</a> is a field of machine learning that tries to automatically measure how subjective a piece of text is.
+Python's <a href=https://textblob.readthedocs.io/en/dev/quickstart.html#sentiment-analysis>TextBlob</a> library contains a tool for measuring the subjectivity of text.
+It outputs a score between 0 and 1, where 0 means entirely objective text and 1 means entirely subjective text.
+</p>
+
+<img class=l-body src=img/articles_stats_body_subjectivity.png >
+<img class=l-body src=img/articles_stats_title_subjectivity.png >
+
+<p>
+We can see that <em>The Golden Antlers</em> has the most subjective text,
+which makes sense because it is a satire paper with over-the-top headlines and articles.
+Interestingly, <em>The Scripps Voice</em> contains the least subjective articles.
+</p>
+
+<h3>Supervised Topic Analysis</h3>
+
+<p>
+The goal of <a href=https://en.wikipedia.org/wiki/Topic_model>Topic Analysis</a> is to discover which newspapers preferentially cover which topics.
+In supervised topic analysis, we already know the topics beforehand.
+</p>
+<p>
+For this analysis, I wanted to learn which newspapers focus on which Claremont Colleges.
+In order to do this, I counted the total number of times that articles written in each of the 5 papers mention each of the 5 colleges, and plot the results below.
+</p>
+
+<img class=l-body src=img/keywords_rate_claremontindependent.com.png >
+<img class=l-body src=img/keywords_rate_cmcforum.com.png >
+<img class=l-body src=img/keywords_rate_scrippsvoice.com.png >
+<img class=l-body src=img/keywords_rate_thegoldenantlers.com.png >
+<img class=l-body src=img/keywords_rate_tsl.news.png >
+
+<p>
+<em>The CMC Forum</em> and <em>The Scripps Voice</em> mention CMC and Scripps colleges respectively a large number of times, which makes sense because these papers have an explicit editorial mission to focus on these colleges.
+More surprisingly, <em>The Golden Antlers</em> and <em>TSL</em> mention CMC and Pomona colleges respectively a large number of times, which goes against their stated missions of serving the entire Claremont Consortium.
+<em>The Claremont Independent</em> has the most balanced coverage of the Claremont Colleges,
+but notably has a distinct lack of reporting about Harvey Mudd.
+</p>
+
+<!--
+<p>Polarities</p>
+<img class=l-body src=img/polarities_claremontindependent.com.png >
+<img class=l-body src=img/polarities_cmcforum.com.png >
+<img class=l-body src=img/polarities_scrippsvoice.com.png >
+<img class=l-body src=img/polarities_thegoldenantlers.com.png >
+<img class=l-body src=img/polarities_tsl.news.png >
+
+<p>Subjectivities</p>
+<img class=l-body src=img/subjectivities_claremontindependent.com.png >
+<img class=l-body src=img/subjectivities_cmcforum.com.png >
+<img class=l-body src=img/subjectivities_scrippsvoice.com.png >
+<img class=l-body src=img/subjectivities_thegoldenantlers.com.png >
+<img class=l-body src=img/subjectivities_tsl.news.png >
+-->
+
+<h3>Unsupervised Topic Analysis</h3>
+
+<p>
+Unsupervised topic analysis is significantly more complicated than the supervised analysis above.
+In the unsupervised version, we are not given a set of topics, but we instead try to figure out what are the "most interesting" topics in the data.
+</p>
+<p>
+The algorithms for unsupervised topic analysis are significantly more complicated than the algorithms for the previous analyses,<dt-fn>
+    The unsupervised topic analysis figure was created through a pipeline of machine learning algorithms provided by the <a href=https://scikit-learn.org>scikit-learn</a> library.<dt-cite key=scikit-learn></dt-cite>
+First, I created a bag-of-words features from the articles using 3-gram tokens.
+Then, I trained a logistic regression model where the class labels were the newspaper that wrote the article.
+I needed to use regularization because the number of features (86151) is significantly greater than the number of articles (10305), and I chose L1 regularization because sparse solutions generate nicer visualizations.
+The visualization is generated by plotting weight coefficient matrix of the trained logistic regression model.
+The final matrix has shape 5x86151, but we only plot the 30 columns with largest L2 norm since these correspond to the 30 words that are most influential in predicting the class label.
+Finally, I rearranged the order of the columns (using a co-clustering method) to make the resulting matrix a bit easier to read.
+</dt-fn>
+but the result of the analysis is shown in the figure below.
+</p>
+
+<img class=l-body src=img/coefs_True_l1_1000.0.png>
+<p>
+The y-axis of this figure shows the 5 student papers,
+and the x-axis shows the 30 most significant topics.
+Each box is colored blue if the corresponding topic and newspaper are highly associated with each other (i.e. the newspaper mentions that topic more than other papers);
+the box is white if there is no association,
+and the box is red if there is negative association
+(i.e. the newspaper never mentions that topic).
+</p>
+
+<!--
+<p>
+<a href=https://claremontindependent.com/cmc-funds-racially-exclusive-program-to-fight-racism/>CMC Funds Racially Exclusive Program to Fight Racism</a>
+
+<a href=https://claremontindependent.com/pomona-progressives-create-whites-only-club-to-fight-racism/>Pomona Progressives Create Whites-Only Club to Fight Racism</a>
+</p>
+-->
+
+<h3>Conclusion</h3>
+
+<p>
+The analyses in this article are just scratching the surface of what modern natural language processing techniques can do.
+</p>
+<p>
+If these types of analysis are interesting to you,
+you should consider taking CMC's <a href=https://catalog.claremontmckenna.edu/preview_program.php?catoid=23&poid=1739>data science sequence</a>.
+This sequence of courses will teach you state-of-the-art natural language processing techniques and how to apply them to a wide variety of application domains.
+If you have any questions, feel free to reach out to me at <a href=mailto:mizbicki@cmc.edu>mizbicki@cmc.edu</a>.
+</p>
+
+</dt-article>
+
+<dt-appendix>
+<!--
+<h3>Appendix Section Title</h3>
+<p>section content<p>
+-->
+</dt-appendix>
+
+<script type="text/bibliography">
+@article{izbicki2019novichenkobot,
+  title={NovichenkoBot: A Webscraper for Downloading Newspaper Articles},
+  author={Mike Izbicki},
+  year={2019},
+}
+
+@article{coleman1975computer,
+  title={A computer readability formula designed for machine scoring.},
+  author={Coleman, Meri and Liau, Ta Lin},
+  journal={Journal of Applied Psychology},
+  volume={60},
+  number={2},
+  pages={283},
+  year={1975},
+  publisher={American Psychological Association}
+}
+
+@article{scikit-learn,
+ title={Scikit-learn: Machine Learning in {P}ython},
+ author={Pedregosa, F. and Varoquaux, G. and Gramfort, A. and Michel, V.
+         and Thirion, B. and Grisel, O. and Blondel, M. and Prettenhofer, P.
+         and Weiss, R. and Dubourg, V. and Vanderplas, J. and Passos, A. and
+         Cournapeau, D. and Brucher, M. and Perrot, M. and Duchesnay, E.},
+ journal={Journal of Machine Learning Research},
+ volume={12},
+ pages={2825--2830},
+ year={2011}
+}
+</script>
