@@ -14,21 +14,34 @@ function loadScriptAsync(scriptSrc, callback) {
     document.head.appendChild(script);
 }
 
-/* This function from https://gist.github.com/z-------------/33350120b304fca2eeb0 */
-var loadScriptAsync = function(url, callback){
-    var elem = document.createElement("script");
-    elem.src = url;
-    document.body.appendChild(elem);
-    elem.addEventListener("load", callback);
-};
-
-/* This is the part where you call the above defined function and "call back" your code which gets executed after the script has loaded */
-loadScriptAsync('https://www.googletagmanager.com/gtag/js?id=UA-36396447-3', function(){
+var elem = document.createElement("script");
+elem.src = 'https://www.googletagmanager.com/gtag/js?id=UA-36396447-3';
+elem.async = true;
+document.head.appendChild(elem);
+callback = function(){
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'UA-36396447-3');
-})
+}
+elem.addEventListener("load", callback);
+
+/* This function from https://gist.github.com/z-------------/33350120b304fca2eeb0 */
+/*var loadScriptAsync = function(url, callback){*/
+/*var elem = document.createElement("script");*/
+/*elem.src = url;*/
+/*elem.async = true;*/
+/*document.head.appendChild(elem);*/
+/*elem.addEventListener("load", callback);*/
+/*};*/
+
+/* This is the part where you call the above defined function and "call back" your code which gets executed after the script has loaded */
+/*loadScriptAsync('https://www.googletagmanager.com/gtag/js?id=UA-36396447-3', function(){*/
+/*window.dataLayer = window.dataLayer || [];*/
+/*function gtag(){dataLayer.push(arguments);}*/
+/*gtag('js', new Date());*/
+/*gtag('config', 'UA-36396447-3');*/
+/*})*/
 
 
 /*
