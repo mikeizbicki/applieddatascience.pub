@@ -11,7 +11,7 @@ MathJax.Hub.Config({
 <script type="text/front-matter">
   title: "Editorial Bias in Claremont Student Newspapers"
   publishedDate: 2019-12-05
-  description: "Description of the post"
+  description: "I used natural language processing (NLP) algorithms to analyze the five student newspapers of the Claremont Colleges. Highlights of the analysis include that <em>The CMC Forum</em> has the most objective reporting, and that nobody likes to write articles about Harvey Mudd College."
   authors:
   - Mike Izbicki: https://izbicki.me
   affiliations:
@@ -20,76 +20,17 @@ MathJax.Hub.Config({
 
 <dt-article>
 <h1>Editorial Bias in Claremont Student Newspapers</h1>
-<!--<h2>These are notes about analyzing the student newspapers from the Claremont Colleges</h2>-->
-<!--<dt-tldr><b>tl;dr</b> test </dt-tldr>-->
 <p>
 <strong>tl;dr</strong>
 I used natural language processing (NLP) algorithms to analyze the five student newspapers of the Claremont Colleges.
 Highlights of the analysis include that <em>The CMC Forum</em> has the most objective reporting,
-<!--<em>The CMC Forum</em> has the best photo essays;-->
-<!--<em>The Student Life</em> covers the most diversity of topics;-->
-<!--<em>The Claremont Independent</em> has a reading level more than 1.5 grades higher than the other papers;-->
 and that nobody likes to write articles about Harvey Mudd College.
 </p>
-<!--
-  <style id="distill-manual-toc">
-    /* TOC */
-    #contents nav a {
-      color: rgba(0, 0, 0, 0.8);
-      border-bottom: none;
-      text-decoration: none;
-    }
-
-    #contents nav ul li {
-      margin-bottom: .25em;
-    }
-
-    #contents nav a:hover {
-      text-decoration: underline solid rgba(0, 0, 0, 0.6);
-    }
-
-    #contents nav ul {
-      margin-top: 0;
-      margin-bottom: 6px;
-    }
-
-
-    #contents nav>div {
-      display: block;
-      outline: none;
-      margin-bottom: 0.5em;
-    }
-
-    #contents nav>div>a {
-      font-size: 13px;
-      font-weight: 600;
-    }
-  </style>
-  -->
 
 <dt-byline></dt-byline>
 
-<!--
-  <div id="contents" class="base-grid" style="border-top: 1px solid #eee; padding: 1.5rem 0;">
-    <nav class="l-text toc figcaption">
-      <h3>Contents</h3>
-      <div><a href="#overview">Overview of the article</a></div>
-      <div><a href="#problem-setup">Problem setup</a></div>
-      <div><a href="#single-path-networks">Single-path networks</a></div>
-      <ul>
-        <li><a href="#computing-receptive-field-size">Computing receptive field size</a></li>
-        <li><a href="#computing-receptive-field-region">Computing receptive field region in input image</a></li>
-      </ul>
-      <div><a href="#arbitrary-computation-graphs">Arbitrary computation graphs</a></div>
-      <div><a href="#discussion">Discussion: receptive fields of modern networks</a></div>
-    </nav>
-  </div>
--->
-
-<h3>Overview</h3>
+<h2>Overview</h2>
 <p>
-<!--I'm new to the Claremont community,-->
-<!--so I wanted to quickly get a sense of what the Claremont student newspapers write about.-->
 The Claremont Colleges have 5 student newspapers:
 <a href=https://tsl.news><em>The Student Life</em></a>,
 <a href=https://scrippsvoice.com ><em>The Scripps Voice</em></a>,
@@ -99,8 +40,6 @@ and
 <a href=https://claremontindependent.com ><em>The Claremont Independent</em></a>.
 All together, they've published more than ten thousand articles online.
 My goal was to understand what types of articles each of these papers publishes.
-<!--That's far too many articles for me to read and analyze,-->
-<!--so the goal of this project is to write a Python program to analyze these articles automatically.-->
 </p>
 <p>
 To solve this problem, I first downloaded all the articles from each of these newspapers.
@@ -112,42 +51,10 @@ Then I applied five different natural language processing techniques to analyze 
 and <a href=#unsupervised>Unsupervised Topic Analysis</a>.
 Each one of these topics has their own section in the writeup below.
 
-<!--By writing a Python program, however, I was able to analyze all of these articles in seconds,-->
-<!--and identify the most interesting articles from each publication.-->
-<!--By reading only these selected articles in depth, I was able to quickly get a sense of the Claremont student community.-->
 </p>
-<!--
-<p>
-I'm a new professor at Claremont McKenna College,
-and I do research and teach classes on data science.
-To help myself better understand student life in Claremont, 
-I decided to use my data science skills to analyze the local student newspapers.
-I'm writing up my findings here in order to illustrate some of the power of the techniques.
-</p>
--->
 
 <a name=data></a>
-<h3>The Data</h3>
-<!--
-</p>
-<ol>
-    <li><a href=https://tsl.news>The Student Life (TSL)</a> is the official student newspaper for the Claremont Colleges</li>
-    <li><a href=https://claremontindependent.com >The Claremont Independent</a> is an independent student newspaper for all five colleges</li>
-    <li><a href=https://scrippsvoice.com >The Scripps Voice</a> is a smaller newspaper dedicated to the all-women <a href=https://scripps.edu>Scripps</a> college</li>
-    <li><a href=https://cmcforum.com >The CMC Forum</a> is dedicated to <a href=https://cmc.edu>Claremont McKenna College</a></li>
-    <li><a href=https://www.thegoldenantlers.com >The Golden Antlers</a> is a satirical newspaper for all five colleges</li>
-</ol>
--->
-<!--
-<table cellpadding=5pt>
-    <tr><td><strong>Newspaper</strong></td><td><strong>Description</strong></td></tr>
-    <tr><td><a href=https://tsl.news>The Student Life (TSL)</a></td><td>The official student newspaper for all five colleges</td></tr>
-    <tr><td><a href=https://claremontindependent.com >The Claremont Independent</a></td><td>An independent student newspaper for all five colleges</td></tr>
-    <tr><td><a href=https://scrippsvoice.com >The Scripps Voice</a></td><td>Focuses on <a href=https://scripps.edu>Scripps</a>, an all-women's college</td></tr>
-    <tr><td><a href=https://cmcforum.com >The CMC Forum</a></td><td>Focuses on <a href=https://cmc.edu>Claremont McKenna College</a></td></tr>
-    <tr><td><a href=https://www.thegoldenantlers.com >The Golden Antlers</a></td><td>A satirical newspaper for all five colleges</td></tr>
-</table>
--->
+<h2>The Data</h2>
 <p>
 I used the <a href='https://github.com/mikeizbicki/NovichenkoBot'>NovichenkoBot</a> web scraper <dt-cite key='izbicki2019novichenkobot'></dt-cite> to download all the articles that the Claremont student newspapers have ever published online.
 NovichenkoBot is a tool that I wrote as part of a larger research project for analyzing the bias in online news.
@@ -175,7 +82,7 @@ and so it seems likely that many of the writers who would have otherwise contrib
 </p>
 
 <a name=writingstyle></a>
-<h3>Writing Style Analysis</h3>
+<h2>Writing Style Analysis</h2>
 <p>
 I began my analysis by calculating some simple statistics about the articles each paper publishes.
 The following two figures use <a href=https://en.wikipedia.org/wiki/Box_plot>box and whisker plots</a> to show the typical number of words in the titles and bodies of the articles for each paper.
@@ -237,7 +144,6 @@ with <em>The Student Life</em> actually being slightly longer.
 <p>
 Instead, it is due to the use of larger, more difficult words.
 The following chart shows the number of rare words<dt-fn>A rare word is defined to be a word that is not in the top ten thousand most commonly used English words.</dt-fn> used per article in each newspaper:
-<!--The words in <em>The Independent</em> average 0.25 more syllables.<dt-fn>This average is calculated after removing stop words, which are words like `a` and `the` which occur commonly in English and have little semantic meaning.</dt-fn> -->
 </p>
 <img class=l-body src=img/articles_stats_difficult_words.png >
 <p>
@@ -248,19 +154,6 @@ And the following chart shows the average size of words in each article:
 From both of these charts, we can see that <em>The Independent</em> uses rarer, longer words than the other venues,
 and this vocabulary choice is what results in their more advanced reading level.
 </p>
-<!--<p>This is the first paragraph of the article.</p>-->
-<!--<p>We can also cite <dt-cite key="gregor2015draw"></dt-cite> external publications. <dt-fn>This will become a hoverable footnote.</dt-fn></p>-->
-<!--<p>You can include inline math using the dollar sign to get \(x=2\) or the double dollar to get full equations-->
-<!--$$-->
-<!--\ell(\mathbb x;\mathbb w) = \log(1+\exp(\mathbb x^T \mathbb w))-->
-<!--$$-->
-<!--<p>This is a code block, but you should use them very sparingly.</p>-->
-<!--<dt-code block language="javascript">-->
-<!--var x = 25;-->
-<!--function(x){-->
-<!--return x * x;-->
-<!--}-->
-<!--</dt-code>-->
 <p>
 This analysis raises two questions:
 Is <em>The Independent</em>'s advanced reading level a sign that they are writing better articles that contain more nuanced discussion?
@@ -269,7 +162,7 @@ Unfortunately, these are questions that a machine can't answer for us and are up
 </p>
 
 <a name=sentiment></a>
-<h3>Sentiment Analysis</h3>
+<h2>Sentiment Analysis</h2>
 <p>
 Next, I wanted to understand whether the different papers generally say positive or negative things.
 That is, I wanted to analyze the sentiment expressed in the papers.
@@ -313,7 +206,6 @@ But algorithms can't (yet) measure sarcasm.
 I was more surprised to see that <em>The Scripps Voice</em> has the most negative titles.
 So again I looked at the three most negative titles:
 <ol>
-    <!--<li><a href=http://scrippsvoice.com/thoroughbreds-is-a-brutal-satire-about-blue-blooded-apathy/>Thoroughbreds Is A Brutal Satire About Blue-Blooded Apathy</a></li>-->
     <li><a href=http://scrippsvoice.com/sorry-claremont-stag-party-was-disgusting/>Sorry Claremont, Stag Party was Disgusting</a></li>
     <li><a href=http://scrippsvoice.com/women-are-just-bad-at-math-scripps-administration-admits>"Women Are Just Bad at Math" Scripps Administration Admits</a></li>
     <li><a href=http://scrippsvoice.com/shes-just-so-desperate/>“She’s Just So Desperate”</a></li>
@@ -332,12 +224,10 @@ I also repeated the same procedure to calculate the sentiment of each article's 
 -->
 
 <a name=subjectivity></a>
-<h3>Subjectivity Analysis</h3>
+<h2>Subjectivity Analysis</h2>
 <p>
 My next task was to determine how subjective the different newspapers are,
 and Python's <a href=https://textblob.readthedocs.io/en/dev/quickstart.html#sentiment-analysis>textblob</a> <dt-cite key=loria2018textblob></dt-cite> library also contains a tool for measuring the subjectivity of text.
-<!--The best newspapers report facts in a neutral, objective way.-->
-<!--<a href=https://en.wikipedia.org/wiki/Sentiment_analysis#Subjectivity/objectivity_identification>Subjectivity analysis</a> is a field of machine learning that tries to automatically measure how subjective a piece of text is.-->
 </p>
 <p>
 The algorithm works similarly to the sentiment analysis algorithm above.
@@ -354,11 +244,10 @@ We can see that <em>The Golden Antlers</em> has the most subjective text,
 which makes sense because it is a satire paper with over-the-top headlines and articles.
 The remaining papers are all relatively objective,<dt-fn>Recall that the red bar in the box and whisker plot indicates a median, so more than half of all articles from <em>The Forum</em>, <em>The Independent</em>, <em>The Scripps Voice</em>, and <em>The Student Life</em> have zero subjectivity (or equivalently 100% objectivity) according to textblob.</dt-fn>
 with <em>The Forum</em> being the most objective of them all (but just barely).
-<!--Interestingly, <em>The Scripps Voice</em> contains the least subjective articles.-->
 </p>
 
 <a name=supervised></a>
-<h3>Supervised Topic Analysis</h3>
+<h2>Supervised Topic Analysis</h2>
 <p>
 My next goal was to learn about *what* the papers are writing about rather than *how* they are writing it.
 Data scientists call this procedure <a href=https://en.wikipedia.org/wiki/Topic_model>Topic Analysis</a>,
@@ -416,7 +305,7 @@ and therefore less interested in reporting about the engineering-focused events 
 -->
 
 <a name=unsupervised></a>
-<h3>Unsupervised Topic Analysis</h3>
+<h2>Unsupervised Topic Analysis</h2>
 
 <p>
 Unsupervised topic analysis is significantly more complicated than the supervised analysis above.
@@ -482,7 +371,7 @@ If I has plotted more topics, then we would have seen more topics related to the
 -->
 
 <a name=conclusion></a>
-<h3>Conclusion</h3>
+<h2>Conclusion</h2>
 
 <p>
 Each of the Claremont newspapers has its niche,
@@ -500,10 +389,6 @@ If you have any questions, feel free to reach out to me at <a href=mailto:mizbic
 </dt-article>
 
 <dt-appendix>
-<!--
-<h3>Appendix Section Title</h3>
-<p>section content<p>
--->
 </dt-appendix>
 
 <script type="text/bibliography">
