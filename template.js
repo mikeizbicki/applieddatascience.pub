@@ -5127,25 +5127,25 @@ var expandData = function(dom, data) {
 
   //   title: 'Attention and Augmented Recurrent Neural Networks',
   //   description: 'A visual overview of neural attention, and the powerful extensions of neural networks being built on top of it.',
-  //   url: 'http://applieddatascience.pub/2016/augmented-rnns',
+  //   url: 'http://datainsights_.pub/2016/augmented-rnns',
   //   tags: [ 'rnn' ],
   //   doiSuffix: 1,
-  //   doi: '10.23915/applieddatascience.00001',
+  //   doi: '10.23915/datainsights_.00001',
   //   volume: 1,
   //   issue: 9,
-  //   applieddatasciencePath: '2016/augmented-rnns',
-  //   githubPath: 'applieddatasciencepub/post--augmented-rnns',
-  //   githubCompareUpdatesUrl: 'https://github.com/applieddatasciencepub/post--augmented-rnns/compare/1596e094d8943d2dc0ea445d92071129c6419c59...3bd9209e0c24d020f87cf6152dcecc6017cbc193',
+  //   datainsights_Path: '2016/augmented-rnns',
+  //   githubPath: 'datainsights_pub/post--augmented-rnns',
+  //   githubCompareUpdatesUrl: 'https://github.com/datainsights_pub/post--augmented-rnns/compare/1596e094d8943d2dc0ea445d92071129c6419c59...3bd9209e0c24d020f87cf6152dcecc6017cbc193',
   //   updatedDate: 2017-03-21T07:13:16.000Z,
   //   publishedDate: 2016-09-08T07:00:00.000Z,
   //   journal: {
-  //     "title": "Applied Data Science",
-  //     "full_title": "Applied Data Science",
-  //     "abbrev_title": "Applied Data Science",
-  //     "url": "http://applieddatascience.pub",
-  //     "doi": "10.23915/applieddatascience",
-  //     "publisherName": "Applied Data Science Working Group",
-  //     "publisherEmail": "admin@applieddatascience.pub",
+  //     "title": "Data Insights",
+  //     "full_title": "Data Insights",
+  //     "abbrev_title": "Data Insights",
+  //     "url": "http://datainsights_.pub",
+  //     "doi": "10.23915/datainsights_",
+  //     "publisherName": "Data Insights Working Group",
+  //     "publisherEmail": "admin@datainsights_.pub",
   //     "issn": "2476-0757",
   //     "editors": [...],
   //     "committee": [...]
@@ -5155,8 +5155,8 @@ var expandData = function(dom, data) {
   // Computed Properties
   //
 
-  //   githubUrl: 'https://github.com/applieddatasciencepub/post--augmented-rnns',
-  //   previewURL: 'http://applieddatascience.pub/2016/augmented-rnns/thumbnail.jpg',
+  //   githubUrl: 'https://github.com/datainsights_pub/post--augmented-rnns',
+  //   previewURL: 'http://datainsights_.pub/2016/augmented-rnns/thumbnail.jpg',
   //   publishedDateRFC: 'Thu, 08 Sep 2016 00:00:00 -0700',
   //   publishedYear: 2016,
   //   publishedMonth: 'Sept',
@@ -5220,10 +5220,10 @@ var expandData = function(dom, data) {
   data.authors = data.authors || [];
 
   // paths
-  if (!data.applieddatasciencePath && !data.url) {
-    data.url = "http://applieddatascience.pub/";
+  if (!data.datainsights_Path && !data.url) {
+    data.url = "http://datainsights_.pub/";
   } else if (!data.url) {
-    data.url = "http://applieddatascience.pub/" + data.applieddatasciencePath;
+    data.url = "http://datainsights_.pub/" + data.datainsights_Path;
   }
   data.githubUrl = "https://github.com/" + data.githubPath;
 
@@ -5358,14 +5358,14 @@ var meta = function(dom, data) {
       { appendHead(("    <meta name=\"" + name + "\" content=\"" + (index$1(content)) + "\" >\n")); }
   }
 
-  appendHead(("\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge,chrome=1\">\n    <link rel=\"icon\" type=\"image/png\" href=\"data:image/png;base64," + favicon + "\">\n    <link href=\"/rss.xml\" rel=\"alternate\" type=\"application/rss+xml\" title=\"Articles from Applied Data Science\">\n    <link rel=\"canonical\" href=\"" + (data.url) + "\">\n    <title>" + (data.title) + "</title>\n  "));
+  appendHead(("\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge,chrome=1\">\n    <link rel=\"icon\" type=\"image/png\" href=\"data:image/png;base64," + favicon + "\">\n    <link href=\"/rss.xml\" rel=\"alternate\" type=\"application/rss+xml\" title=\"Articles from Data Insights\">\n    <link rel=\"canonical\" href=\"" + (data.url) + "\">\n    <title>" + (data.title) + "</title>\n  "));
 
   appendHead(("\n    <!--  https://schema.org/Article -->\n    <meta property=\"article:published\" itemprop=\"datePublished\" content=\"" + (data.publishedYear) + "-" + (data.publishedMonthPadded) + "-" + (data.publishedDayPadded) + "\" />\n    <meta property=\"article:created\" itemprop=\"dateCreated\" content=\"" + (data.publishedDate) + "\" />\n    <meta property=\"article:modified\" itemprop=\"dateModified\" content=\"" + (data.updatedDate) + "\" />\n  "));
   data.authors.forEach(function (a) {
     appendHtml(head, ("\n      <meta property=\"article:author\" content=\"" + (a.firstName) + " " + (a.lastName) + "\" />"));
   });
 
-  appendHead(("\n    <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->\n    <meta property=\"og:type\" content=\"article\"/>\n    <meta property=\"og:title\" content=\"" + (data.title) + "\"/>\n    <meta property=\"og:description\" content=\"" + (data.description) + "\">\n    <meta property=\"og:url\" content=\"" + (data.url) + "\"/>\n    <meta property=\"og:image\" content=\"" + (data.previewURL) + "\"/>\n    <meta property=\"og:locale\" content=\"en_US\" />\n    <meta property=\"og:site_name\" content=\"Applied Data Science\" />\n  "));
+  appendHead(("\n    <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->\n    <meta property=\"og:type\" content=\"article\"/>\n    <meta property=\"og:title\" content=\"" + (data.title) + "\"/>\n    <meta property=\"og:description\" content=\"" + (data.description) + "\">\n    <meta property=\"og:url\" content=\"" + (data.url) + "\"/>\n    <meta property=\"og:image\" content=\"" + (data.previewURL) + "\"/>\n    <meta property=\"og:locale\" content=\"en_US\" />\n    <meta property=\"og:site_name\" content=\"Data Insights\" />\n  "));
 
   appendHead(("\n    <!--  https://dev.twitter.com/cards/types/summary -->\n    <meta name=\"twitter:card\" content=\"summary_large_image\">\n    <meta name=\"twitter:title\" content=\"" + (data.title) + "\">\n    <meta name=\"twitter:description\" content=\"" + (data.description) + "\">\n    <meta name=\"twitter:url\" content=\"" + (data.url) + "\">\n    <meta name=\"twitter:image\" content=\"" + (data.previewURL) + "\">\n    <meta name=\"twitter:image:width\" content=\"560\">\n    <meta name=\"twitter:image:height\" content=\"295\">\n  "));
 
@@ -5458,7 +5458,7 @@ function citation_meta_content(ref){
 }
 
 var html$1 = "";
-/*var html$1 = "\n<style>\n  dt-banner {\n    background: #FFF59D;\n    display: block;\n    text-align: center;\n    color: black;\n    height: 70px;\n    line-height: 70px;\n  }\n</style>\n<div>This article is a draft, awaiting review for publication in Applied Data Science</div>\n";*/
+/*var html$1 = "\n<style>\n  dt-banner {\n    background: #FFF59D;\n    display: block;\n    text-align: center;\n    color: black;\n    height: 70px;\n    line-height: 70px;\n  }\n</style>\n<div>This article is a draft, awaiting review for publication in Data Insights</div>\n";*/
 
 var banner = function(dom, data) {
   var banner = dom.createElement("dt-banner");
@@ -6107,7 +6107,7 @@ var mustache = createCommonjsModule(function (module, exports) {
 }));
 });
 
-var html$2 = "\n<style>\n  dt-byline {\n    font-size: 12px;\n    line-height: 18px;\n    display: block;\n    border-top: 1px solid rgba(0, 0, 0, 0.1);\n    border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n    color: rgba(0, 0, 0, 0.5);\n    padding-top: 12px;\n    padding-bottom: 12px;\n  }\n  dt-article.centered dt-byline {\n    text-align: center;\n\n  }\n  dt-byline a,\n  dt-article dt-byline a {\n    text-decoration: none;\n    border-bottom: none;\n  }\n  dt-article dt-byline a:hover {\n    text-decoration: underline;\n    border-bottom: none;\n  }\n  dt-byline .authors {\n    text-align: left;\n  }\n  dt-byline .name {\n    display: inline;\n    text-transform: uppercase;\n  }\n  dt-byline .affiliation {\n    display: inline;\n  }\n  dt-byline .date {\n    display: block;\n    text-align: left;\n  }\n  dt-byline .year, dt-byline .month {\n    display: inline;\n  }\n  dt-byline .citation {\n    display: block;\n    text-align: left;\n  }\n  dt-byline .citation div {\n    display: inline;\n  }\n\n  @media(min-width: 768px) {\n    dt-byline {\n    }\n  }\n\n  @media(min-width: 1080px) {\n    dt-byline {\n      border-bottom: none;\n      margin-bottom: 70px;\n    }\n\n    dt-byline a:hover {\n      color: rgba(0, 0, 0, 0.9);\n    }\n\n    dt-byline .authors {\n      display: inline-block;\n    }\n\n    dt-byline .author {\n      display: inline-block;\n      margin-right: 12px;\n      /*padding-left: 20px;*/\n      /*border-left: 1px solid #ddd;*/\n    }\n\n    dt-byline .affiliation {\n      display: block;\n    }\n\n    dt-byline .author:last-child {\n      margin-right: 0;\n    }\n\n    dt-byline .name {\n      display: block;\n    }\n\n    dt-byline .date {\n      border-left: 1px solid rgba(0, 0, 0, 0.1);\n      padding-left: 15px;\n      margin-left: 15px;\n      display: inline-block;\n    }\n    dt-byline .year, dt-byline .month {\n      display: block;\n    }\n\n    dt-byline .citation {\n      border-left: 1px solid rgba(0, 0, 0, 0.15);\n      padding-left: 15px;\n      margin-left: 15px;\n      display: inline-block;\n    }\n    dt-byline .citation div {\n      display: block;\n    }\n  }\n</style>\n\n";
+var html$2 = "\n<style>\n  dt-byline {\n    font-size: 12px;\n    line-height: 18px;\n    display: block;\n    border-top: 1px solid rgba(0, 0, 0, 0.1);\n    border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n    color: rgba(0, 0, 0, 0.5);\n    padding-top: 12px;\n    padding-bottom: 12px;\n  }\n  dt-article.centered dt-byline {\n    text-align: center;\n\n  }\n  dt-byline a,\n  dt-article dt-byline a {\n    text-decoration: none;\n    border-bottom: none;\n  }\n  dt-article dt-byline a:hover {\n    text-decoration: underline;\n    border-bottom: none;\n  }\n  dt-byline .authors {\n    text-align: left;\n  }\n  dt-byline .name {\n    display: inline;\n    text-transform: uppercase;\n  }\n  dt-byline .affiliation {\n    display: inline;\n  }\n  dt-byline .date {\n    vertical-align: top;\n    text-align: left;\n  }\n  dt-byline .year, dt-byline .month {\n    display: inline;\n  }\n  dt-byline .citation {\n vertical-align: top;   display: block;\n    text-align: left;\n  }\n  dt-byline .citation div {\n    display: inline;\n  }\n\n  @media(min-width: 768px) {\n    dt-byline {\n    }\n  }\n\n  @media(min-width: 1080px) {\n    dt-byline {\n      border-bottom: none;\n      margin-bottom: 70px;\n    }\n\n    dt-byline a:hover {\n      color: rgba(0, 0, 0, 0.9);\n    }\n\n    dt-byline .authors {\n      display: inline-block;\n    }\n\n    dt-byline .author {\n      display: block;\n      margin-right: 12px;\n      /*padding-left: 20px;*/\n      /*border-left: 1px solid #ddd;*/\n    }\n\n    dt-byline .affiliation {\n      display: block;\n    }\n\n    dt-byline .author:last-child {\n      margin-right: 0;\n    }\n\n    dt-byline .name {\n      display: block;\n    }\n\n    dt-byline .date {\n      border-left: 1px solid rgba(0, 0, 0, 0.1);\n      padding-left: 15px;\n      margin-left: 15px;\n      display: inline-block;\n    }\n    dt-byline .year, dt-byline .month {\n      display: block;\n    }\n\n    dt-byline .citation {\n      border-left: 1px solid rgba(0, 0, 0, 0.15);\n      padding-left: 15px;\n      margin-left: 15px;\n      display: inline-block;\n    }\n    dt-byline .citation div {\n      display: block;\n    }\n  }\n</style>\n\n";
 
 var template = "\n<div class=\"byline\">\n  <div class=\"authors\">\n  {{#authors}}\n    <div class=\"author\">\n      {{#personalURL}}\n        <a class=\"name\" href=\"{{personalURL}}\">{{name}}</a>\n      {{/personalURL}}\n      {{^personalURL}}\n        <div class=\"name\">{{name}}</div>\n      {{/personalURL}}\n      {{#affiliation}}\n        {{#affiliationURL}}\n          <a class=\"affiliation\" href=\"{{affiliationURL}}\">{{affiliation}}</a>\n        {{/affiliationURL}}\n        {{^affiliationURL}}\n          <div class=\"affiliation\">{{affiliation}}</div>\n        {{/affiliationURL}}\n      {{/affiliation}}\n    </div>\n    {{/authors}}\n  </div>\n  {{#publishedYear}}\n  <div class=\"date\">\n    <div class=\"month\">{{publishedMonth}}. {{publishedDay}}</div>\n    <div class=\"year\">{{publishedYear}}</div>\n  </div>\n  {{/publishedYear}}\n  {{#publishedYear}}\n  <a class=\"citation\" href=\"#citation\">\n    <div>Citation:</div>\n    <div>{{concatenatedAuthors}}, {{publishedYear}}</div>\n  </a>\n  {{/publishedYear}}\n</div>\n";
 
@@ -6152,7 +6152,7 @@ var appendixAppliedDataScience = function(dom, data) {
 
       /*newHTML += "<h3>Updates and Corrections</h3>\n    <p><a href=\"" + (data.githubCompareUpdatesUrl) + "\">View all changes</a> to this article since it was first published. If you see a mistake or want to suggest a change, please <a class=\"github-issue\" href=\"" + (data.githubUrl) + "/issues/new\">create an issue on GitHub</a>.</p>";*/
 
-    newHTML += "<h3 id=\"citation\">Citations and Reuse</h3>\n    <p>All content is licensed under Creative Commons Attribution <a href=\"https://creativecommons.org/licenses/by/2.0/\">CC-BY 2.0</a>, unless otherwise noted.</p>\n\n    <p>For attribution in academic contexts, please cite this work as</p>\n    <pre class=\"citation short\">" + (data.concatenatedAuthors) + ", \"" + (data.title) + "\", Applied Data Science, " + (data.publishedYear) + "." /*FIXME+ "http://doi.org/" + (data.doi)*/ + "</pre>\n\n    <p>BibTeX citation</p>\n<pre class=\"citation long\">@article{" + (data.slug) + ",\n  author = {" + (data.bibtexAuthors) + "},\n  title = {" + (data.title) + "},\n  journal = {Applied Data Science},\n  year = {" + (data.publishedYear) + "}\n}</pre>"; //FIXME:,\n  url = {" + (data.url) + "},\n  doi = {" + (data.doi) + "}\n}</pre>";
+    newHTML += "<h3 id=\"citation\">Citations and Reuse</h3>\n    <p>All content is licensed under Creative Commons Attribution <a href=\"https://creativecommons.org/licenses/by/2.0/\">CC-BY 2.0</a>, unless otherwise noted.</p>\n\n    <p>For attribution in academic contexts, please cite this work as</p>\n    <pre class=\"citation short\">" + (data.concatenatedAuthors) + ", \"" + (data.title) + "\", Data Insights, " + (data.publishedYear) + "." /*FIXME+ "http://doi.org/" + (data.doi)*/ + "</pre>\n\n    <p>BibTeX citation</p>\n<pre class=\"citation long\">@article{" + (data.slug) + ",\n  author = {" + (data.bibtexAuthors) + "},\n  title = {" + (data.title) + "},\n  journal = {Data Insights},\n  year = {" + (data.publishedYear) + "}\n}</pre>"; //FIXME:,\n  url = {" + (data.url) + "},\n  doi = {" + (data.doi) + "}\n}</pre>";
 
     var existingHTML = el.innerHTML;
     el.innerHTML = existingHTML + newHTML;
@@ -18222,7 +18222,7 @@ function xml(obj) {
 
 var logo = "<svg viewBox=\"-607 419 64 64\">\n  <path d=\"M-573.4,478.9c-8,0-14.6-6.4-14.6-14.5s14.6-25.9,14.6-40.8c0,14.9,14.6,32.8,14.6,40.8S-565.4,478.9-573.4,478.9z\"/>\n</svg>\n";
 
-var html$4 = "\n<style>\ndt-header {\n  display: block;\n  position: relative;\n  height: 60px;\n  background-color: hsl(200, 60%, 15%);\n  width: 100%;\n  box-sizing: border-box;\n  z-index: 2;\n  color: rgba(0, 0, 0, 0.8);\n  border-bottom: 1px solid rgba(0, 0, 0, 0.08);\n  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);\n}\ndt-header .content {\n  height: 70px;\n}\ndt-header a {\n  font-size: 16px;\n  height: 60px;\n  line-height: 60px;\n  text-decoration: none;\n  color: rgba(255, 255, 255, 0.8);\n  padding: 22px 0;\n}\ndt-header a:hover {\n  color: rgba(255, 255, 255, 1);\n}\ndt-header svg {\n  width: 24px;\n  position: relative;\n  top: 4px;\n  margin-right: 2px;\n}\n@media(min-width: 1080px) {\n  dt-header {\n    height: 70px;\n  }\n  dt-header a {\n    height: 70px;\n    line-height: 70px;\n    padding: 28px 0;\n  }\n  dt-header .logo {\n  }\n}\ndt-header svg path {\n  fill: none;\n  stroke: rgba(255, 255, 255, 0.8);\n  stroke-width: 3px;\n}\ndt-header .logo {\n  font-size: 17px;\n  font-weight: 200;\n}\ndt-header .nav {\n  float: right;\n  font-weight: 300;\n}\ndt-header .nav a {\n  font-size: 12px;\n  margin-left: 24px;\n  text-transform: uppercase;\n}\n</style>\n\n<div class=\"content l-page\">\n  <a href=\"/\" class=\"logo\">\n    " + logo + "\n    Applied Data Science\n  (DRAFT: DO NOT SHARE)</a>\n  <div class=\"nav\">\n    " /*FIXME<a href=\"/about/\">About</a>\n    <a href=\"/prize/\">Prize</a>\n    <a href=\"/journal/\">Submit</a>\n*/ +"  </div>\n</div>\n";
+var html$4 = "\n<style>\ndt-header {\n  display: block;\n  position: relative;\n  height: 60px;\n  background-color: hsl(200, 60%, 15%);\n  width: 100%;\n  box-sizing: border-box;\n  z-index: 2;\n  color: rgba(0, 0, 0, 0.8);\n  border-bottom: 1px solid rgba(0, 0, 0, 0.08);\n  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);\n}\ndt-header .content {\n  height: 70px;\n}\ndt-header a {\n  font-size: 16px;\n  height: 60px;\n  line-height: 60px;\n  text-decoration: none;\n  color: rgba(255, 255, 255, 0.8);\n  padding: 22px 0;\n}\ndt-header a:hover {\n  color: rgba(255, 255, 255, 1);\n}\ndt-header svg {\n  width: 24px;\n  position: relative;\n  top: 4px;\n  margin-right: 2px;\n}\n@media(min-width: 1080px) {\n  dt-header {\n    height: 70px;\n  }\n  dt-header a {\n    height: 70px;\n    line-height: 70px;\n    padding: 28px 0;\n  }\n  dt-header .logo {\n  }\n}\ndt-header svg path {\n  fill: none;\n  stroke: rgba(255, 255, 255, 0.8);\n  stroke-width: 3px;\n}\ndt-header .logo {\n  font-size: 17px;\n  font-weight: 200;\n}\ndt-header .nav {\n  float: right;\n  font-weight: 300;\n}\ndt-header .nav a {\n  font-size: 12px;\n  margin-left: 24px;\n  text-transform: uppercase;\n}\n</style>\n\n<div class=\"content l-page\">\n  <a href=\"/\" class=\"logo\">\n    " + logo + "\n    Data Insights\n  </a>\n  <div class=\"nav\">\n    " /*FIXME<a href=\"/about/\">About</a>\n    <a href=\"/prize/\">Prize</a>\n    <a href=\"/journal/\">Submit</a>\n*/ +"  </div>\n</div>\n";
 
 var header = function(dom, data) {
   var el = dom.querySelector("dt-header");
@@ -18236,7 +18236,7 @@ var header = function(dom, data) {
   }
 };
 
-var html$5 = "\n<style>\ndt-footer {\n  display: block;\n  color: rgba(255, 255, 255, 0.4);\n  font-weight: 300;\n  padding: 40px 0;\n  border-top: 1px solid rgba(0, 0, 0, 0.1);\n  background-color: hsl(200, 60%, 15%);\n  text-align: center;\n}\ndt-footer .logo svg {\n  width: 24px;\n  position: relative;\n  top: 4px;\n  margin-right: 2px;\n}\ndt-footer .logo svg path {\n  fill: none;\n  stroke: rgba(255, 255, 255, 0.8);\n  stroke-width: 3px;\n}\ndt-footer .logo {\n  font-size: 17px;\n  font-weight: 200;\n  color: rgba(255, 255, 255, 0.8);\n  text-decoration: none;\n  margin-right: 6px;\n}\ndt-footer .nav {\n  margin-top: 12px;\n}\ndt-footer .nav a {\n  color: rgba(255, 255, 255, 0.8);\n  margin-right: 6px;\n}\n</style>\n\n<div class=\"l-page\">\n  <div class=\"description\">\n  <a href=\"/\" class=\"logo\">\n    " + logo + "\n    Applied Data Science\n  </a>\n  is dedicated to real world examples of data science\n  </div>\n  <div class=\"nav\">\n    " /*FIXME<a href=\"http://applieddatascience.pub/about/\">About</a>\n    <a href=\"http://applieddatascience.pub/journal/\">Submit</a>\n    <a href=\"http://applieddatascience.pub/prize/\">Prize</a>\n    <a href=\"http://applieddatascience.pub/archive/\">Archive</a>\n    <a href=\"http://applieddatascience.pub/rss.xml\">RSS</a>\n    <a href=\"https://github.com/applieddatasciencepub\">GitHub</a>\n    <a href=\"https://twitter.com/applieddatasciencepub\">Twitter</a>\n    &nbsp;&nbsp;&nbsp;&nbsp; ISSN 2476-0757\n*/ +"  </div>\n</div>\n";
+var html$5 = "\n<style>\ndt-footer {\n  display: block;\n  color: rgba(255, 255, 255, 0.4);\n  font-weight: 300;\n  padding: 40px 0;\n  border-top: 1px solid rgba(0, 0, 0, 0.1);\n  background-color: hsl(200, 60%, 15%);\n  text-align: center;\n}\ndt-footer .logo svg {\n  width: 24px;\n  position: relative;\n  top: 4px;\n  margin-right: 2px;\n}\ndt-footer .logo svg path {\n  fill: none;\n  stroke: rgba(255, 255, 255, 0.8);\n  stroke-width: 3px;\n}\ndt-footer .logo {\n  font-size: 17px;\n  font-weight: 200;\n  color: rgba(255, 255, 255, 0.8);\n  text-decoration: none;\n  margin-right: 6px;\n}\ndt-footer .nav {\n  margin-top: 12px;\n}\ndt-footer .nav a {\n  color: rgba(255, 255, 255, 0.8);\n  margin-right: 6px;\n}\n</style>\n\n<div class=\"l-page\">\n  <div class=\"description\">\n  <a href=\"/\" class=\"logo\">\n    " + logo + "\n    Data Insights\n  </a>\n  is dedicated to real world examples of data science\n  </div>\n  <div class=\"nav\">\n    " /*FIXME<a href=\"http://datainsights_.pub/about/\">About</a>\n    <a href=\"http://datainsights_.pub/journal/\">Submit</a>\n    <a href=\"http://datainsights_.pub/prize/\">Prize</a>\n    <a href=\"http://datainsights_.pub/archive/\">Archive</a>\n    <a href=\"http://datainsights_.pub/rss.xml\">RSS</a>\n    <a href=\"https://github.com/datainsights_pub\">GitHub</a>\n    <a href=\"https://twitter.com/datainsights_pub\">Twitter</a>\n    &nbsp;&nbsp;&nbsp;&nbsp; ISSN 2476-0757\n*/ +"  </div>\n</div>\n";
 
 var footer = function(dom, data) {
   var el = dom.querySelector("dt-footer");
@@ -18269,7 +18269,7 @@ function renderOnLoad(dom, data) {
   footnote(dom, data);
   typeset(dom, data);
   hoverBox(dom, data);
-   applieddatascienceify(dom, data); 
+   datainsights_ify(dom, data); 
 }
 
 // If we are in a browser, render automatically...
@@ -18297,19 +18297,19 @@ function render$1(dom, data) {
   renderImmediately(dom);
   renderOnLoad(dom, data);
   // Remove script tag so it doesn't run again in the client
-  var s = dom.querySelector('script[src*="applieddatascience.pub/template"]');
+  var s = dom.querySelector('script[src*="datainsights_.pub/template"]');
   if (s) { s.parentElement.removeChild(s); }
 }
 
-// Applied Data Science specific rendering
-function applieddatascienceify(dom, data) {
+// Data Insights specific rendering
+function datainsights_ify(dom, data) {
   header(dom, data);
   appendixAppliedDataScience(dom, data);
   footer(dom, data);
 }
 
 exports.render = render$1;
-exports.applieddatascienceify = applieddatascienceify;
+exports.datainsights_ify = datainsights_ify;
 exports.generateCrossref = generateCrossref;
 
 Object.defineProperty(exports, '__esModule', { value: true });
