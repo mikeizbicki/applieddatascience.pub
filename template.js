@@ -1,53 +1,3 @@
-/*
- * This code comes from Google Analytics and 
- * https://stackoverflow.com/questions/51833090/put-google-analytics-code-in-an-js-file
- */
-
-/*This function will load script and call the callback once the script has loaded*/
-function loadScriptAsync(scriptSrc, callback) {
-    if (typeof callback !== 'function') {
-        throw new Error('Not a valid callback for async script load');
-    }
-    var script = document.createElement('script');
-    script.onload = callback;
-    script.src = scriptSrc;
-    document.head.appendChild(script);
-}
-
-var elem = document.createElement("script");
-elem.src = 'https://www.googletagmanager.com/gtag/js?id=UA-36396447-3';
-elem.async = true;
-document.head.appendChild(elem);
-callback = function(){
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-36396447-3');
-}
-elem.addEventListener("load", callback);
-
-/* This function from https://gist.github.com/z-------------/33350120b304fca2eeb0 */
-/*var loadScriptAsync = function(url, callback){*/
-/*var elem = document.createElement("script");*/
-/*elem.src = url;*/
-/*elem.async = true;*/
-/*document.head.appendChild(elem);*/
-/*elem.addEventListener("load", callback);*/
-/*};*/
-
-/* This is the part where you call the above defined function and "call back" your code which gets executed after the script has loaded */
-/*loadScriptAsync('https://www.googletagmanager.com/gtag/js?id=UA-36396447-3', function(){*/
-/*window.dataLayer = window.dataLayer || [];*/
-/*function gtag(){dataLayer.push(arguments);}*/
-/*gtag('js', new Date());*/
-/*gtag('config', 'UA-36396447-3');*/
-/*})*/
-
-
-/*
- * This code comes from distill.pub for formatting
- */
-
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -3882,7 +3832,6 @@ var frontMatter = function(dom, data) {
   data.description = localData.description ? localData.description : "No description.";
 
   data.authors = localData.authors ? localData.authors : [];
-  data.publishedDate = localData.publishedDate ? localData.publishedDate : '';
 
   data.authors = data.authors.map(function (author, i) {
     var a = {};
@@ -3907,7 +3856,7 @@ var frontMatter = function(dom, data) {
     }
     return a;
   });
-  
+
 
 };
 
@@ -3938,7 +3887,7 @@ var bibtexParse = createCommonjsModule(function (module, exports) {
 (function(exports) {
 
     function BibtexParser() {
-        
+
         this.months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
         this.notKey = [',','{','}',' ','='];
         this.pos = 0;
@@ -4100,7 +4049,7 @@ var bibtexParse = createCommonjsModule(function (module, exports) {
                     { return k.toLowerCase(); }
                 else
                     { throw "Value expected:" + this.input.substring(start) + ' for key: ' + k; }
-            
+
             }
         };
 
@@ -4130,7 +4079,7 @@ var bibtexParse = createCommonjsModule(function (module, exports) {
                     return this$1.input.substring(start, this$1.pos);
                 } else {
                     this$1.pos++;
-                    
+
                 }
             }
         };
@@ -4159,7 +4108,7 @@ var bibtexParse = createCommonjsModule(function (module, exports) {
                 if (this$1.tryMatch("}")) {
                     break;
                 }
-                
+
                 kv = this$1.key_equals_value();
                 this$1.currentEntry['entryTags'][kv[0]] = kv[1];
             }
@@ -4216,7 +4165,7 @@ var bibtexParse = createCommonjsModule(function (module, exports) {
             }
         };
     }
-    
+
     exports.toJSON = function(bibtex) {
         var b = new BibtexParser();
         b.setInput(bibtex);
@@ -4246,7 +4195,7 @@ var bibtexParse = createCommonjsModule(function (module, exports) {
             out += '}\n\n';
         }
         return out;
-        
+
     };
 
 })(exports);
@@ -5127,25 +5076,25 @@ var expandData = function(dom, data) {
 
   //   title: 'Attention and Augmented Recurrent Neural Networks',
   //   description: 'A visual overview of neural attention, and the powerful extensions of neural networks being built on top of it.',
-  //   url: 'http://applieddatascience.pub/2016/augmented-rnns',
+  //   url: 'http://distill.pub/2016/augmented-rnns',
   //   tags: [ 'rnn' ],
   //   doiSuffix: 1,
-  //   doi: '10.23915/applieddatascience.00001',
+  //   doi: '10.23915/distill.00001',
   //   volume: 1,
   //   issue: 9,
-  //   applieddatasciencePath: '2016/augmented-rnns',
-  //   githubPath: 'applieddatasciencepub/post--augmented-rnns',
-  //   githubCompareUpdatesUrl: 'https://github.com/applieddatasciencepub/post--augmented-rnns/compare/1596e094d8943d2dc0ea445d92071129c6419c59...3bd9209e0c24d020f87cf6152dcecc6017cbc193',
+  //   distillPath: '2016/augmented-rnns',
+  //   githubPath: 'distillpub/post--augmented-rnns',
+  //   githubCompareUpdatesUrl: 'https://github.com/distillpub/post--augmented-rnns/compare/1596e094d8943d2dc0ea445d92071129c6419c59...3bd9209e0c24d020f87cf6152dcecc6017cbc193',
   //   updatedDate: 2017-03-21T07:13:16.000Z,
   //   publishedDate: 2016-09-08T07:00:00.000Z,
   //   journal: {
-  //     "title": "Applied Data Science",
-  //     "full_title": "Applied Data Science",
-  //     "abbrev_title": "Applied Data Science",
-  //     "url": "http://applieddatascience.pub",
-  //     "doi": "10.23915/applieddatascience",
-  //     "publisherName": "Applied Data Science Working Group",
-  //     "publisherEmail": "admin@applieddatascience.pub",
+  //     "title": "Distill",
+  //     "full_title": "Distill",
+  //     "abbrev_title": "Distill",
+  //     "url": "http://distill.pub",
+  //     "doi": "10.23915/distill",
+  //     "publisherName": "Distill Working Group",
+  //     "publisherEmail": "admin@distill.pub",
   //     "issn": "2476-0757",
   //     "editors": [...],
   //     "committee": [...]
@@ -5155,8 +5104,8 @@ var expandData = function(dom, data) {
   // Computed Properties
   //
 
-  //   githubUrl: 'https://github.com/applieddatasciencepub/post--augmented-rnns',
-  //   previewURL: 'http://applieddatascience.pub/2016/augmented-rnns/thumbnail.jpg',
+  //   githubUrl: 'https://github.com/distillpub/post--augmented-rnns',
+  //   previewURL: 'http://distill.pub/2016/augmented-rnns/thumbnail.jpg',
   //   publishedDateRFC: 'Thu, 08 Sep 2016 00:00:00 -0700',
   //   publishedYear: 2016,
   //   publishedMonth: 'Sept',
@@ -5220,10 +5169,10 @@ var expandData = function(dom, data) {
   data.authors = data.authors || [];
 
   // paths
-  if (!data.applieddatasciencePath && !data.url) {
-    data.url = "http://applieddatascience.pub/";
+  if (!data.distillPath && !data.url) {
+    data.url = "http://distill.pub/";
   } else if (!data.url) {
-    data.url = "http://applieddatascience.pub/" + data.applieddatasciencePath;
+    data.url = "http://distill.pub/" + data.distillPath;
   }
   data.githubUrl = "https://github.com/" + data.githubPath;
 
@@ -5270,7 +5219,7 @@ var expandData = function(dom, data) {
 
 };
 
-var favicon = ""; //"iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA99JREFUeNrsG4t1ozDMzQSM4A2ODUonKBucN2hugtIJ6E1AboLcBiQTkJsANiAb9OCd/OpzMWBJBl5TvaeXPiiyJetry0J8wW3D3QpjRh3GjneXDq+fSQA9s2mH9x3KDhN4foJfCb8N/Jrv+2fnDn8vLRQOplWHVYdvHZYdZsBcZP1vBmh/n8DzEmhUQDPaOuP9pFuY+JwJHwHnCLQE2tnWBGEyXozY9xCUgHMhhjE2I4heVWtgIkZ83wL6Qgxj1obfWBxymPwe+b00BCCRNPbwfb60yleAkkBHGT5AEehIYz7eJrFDMF9CvH4wwhcGHiHMneFvLDQwlwvMLQq58trRcYBWfYn0A0OgHWQUSu25mE+BnoYKnnEJoeIWAifzOv7vLWd2ZKRfWAIme3tOiUaQ3UnLkb0xj1FxRIeEGKaGIHOs9nEgLaaA9i0JRYo1Ic67wJW86KSKE/ZAM8KuVMk8ITVhmxUxJ3Cl2xlm9Vtkeju1+mpCQNxaEGNCY8bs9X2YqwNoQeGjBWut/ma0QAWy/TqAsHx9wSya3I5IRxOfTC+leG+kA/4vSeEcGBtNUN6byhu3+keEZCQJUNh8MAO7HL6H8pQLnsW/Hd4T4lv93TPjfM7A46iEEqbB5EDOvwYNW6tGNZzT/o+CZ6sqZ6wUtR/wf7mi/VL8iNciT6rHih48Y55b4nKCHJCCzb4y0nwFmin3ZEMIoLfZF8F7nncFmvnWBaBj7CGAYA/WGJsUwHdYqVDwAmNsUgAx4CGgAA7GOOxADYOFWOaIKifuVYzmOpREqA21Mo7aPsgiY1PhOMAmxtR+AUbYH3Id2wc0SAFIQTsn9IUGWR8k9jx3vtXSiAacFxTAGakBk9UudkNECd6jLe+6HrshshvIuC6IlLMRy7er+JpcKma24SlE4cFZSZJDGVVrsNvitQhQrDhW0jfiOLfFd47C42eHT56D/BK0To+58Ahj+cAT8HT1UWlfLZCCd/uKawzU0Rh2EyIX/Icqth3niG8ybNroezwe6khdCNxRN+l4XGdOLVLlOOt2hTRJlr1ETIuMAltVTMz70mJrkdGAaZLSmnBEqmAE32JCMmuTlCnRgsBENtOUpHhvvsYIL0ibnBkaC6QvKcR7738GKp0AKnim7xgUSNv1bpS8QwhBt8r+EP47v/oyRK/S34yJ9nT+AN0Tkm4OdB9E4BsmXM3SnMlRFUrtp6IDpV2eKzdYvF3etm3KhQksbOLChGkSmcBdmcEwvqkrMy5BzL00NZeu3qPYJOOuCc+5NjcWKXQxFvTa3NoXJ4d8in7fiAUuTt781dkvuHX4K8AA2Usy7yNKLy0AAAAASUVORK5CYII=\n";
+var favicon = "iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA99JREFUeNrsG4t1ozDMzQSM4A2ODUonKBucN2hugtIJ6E1AboLcBiQTkJsANiAb9OCd/OpzMWBJBl5TvaeXPiiyJetry0J8wW3D3QpjRh3GjneXDq+fSQA9s2mH9x3KDhN4foJfCb8N/Jrv+2fnDn8vLRQOplWHVYdvHZYdZsBcZP1vBmh/n8DzEmhUQDPaOuP9pFuY+JwJHwHnCLQE2tnWBGEyXozY9xCUgHMhhjE2I4heVWtgIkZ83wL6Qgxj1obfWBxymPwe+b00BCCRNPbwfb60yleAkkBHGT5AEehIYz7eJrFDMF9CvH4wwhcGHiHMneFvLDQwlwvMLQq58trRcYBWfYn0A0OgHWQUSu25mE+BnoYKnnEJoeIWAifzOv7vLWd2ZKRfWAIme3tOiUaQ3UnLkb0xj1FxRIeEGKaGIHOs9nEgLaaA9i0JRYo1Ic67wJW86KSKE/ZAM8KuVMk8ITVhmxUxJ3Cl2xlm9Vtkeju1+mpCQNxaEGNCY8bs9X2YqwNoQeGjBWut/ma0QAWy/TqAsHx9wSya3I5IRxOfTC+leG+kA/4vSeEcGBtNUN6byhu3+keEZCQJUNh8MAO7HL6H8pQLnsW/Hd4T4lv93TPjfM7A46iEEqbB5EDOvwYNW6tGNZzT/o+CZ6sqZ6wUtR/wf7mi/VL8iNciT6rHih48Y55b4nKCHJCCzb4y0nwFmin3ZEMIoLfZF8F7nncFmvnWBaBj7CGAYA/WGJsUwHdYqVDwAmNsUgAx4CGgAA7GOOxADYOFWOaIKifuVYzmOpREqA21Mo7aPsgiY1PhOMAmxtR+AUbYH3Id2wc0SAFIQTsn9IUGWR8k9jx3vtXSiAacFxTAGakBk9UudkNECd6jLe+6HrshshvIuC6IlLMRy7er+JpcKma24SlE4cFZSZJDGVVrsNvitQhQrDhW0jfiOLfFd47C42eHT56D/BK0To+58Ahj+cAT8HT1UWlfLZCCd/uKawzU0Rh2EyIX/Icqth3niG8ybNroezwe6khdCNxRN+l4XGdOLVLlOOt2hTRJlr1ETIuMAltVTMz70mJrkdGAaZLSmnBEqmAE32JCMmuTlCnRgsBENtOUpHhvvsYIL0ibnBkaC6QvKcR7738GKp0AKnim7xgUSNv1bpS8QwhBt8r+EP47v/oyRK/S34yJ9nT+AN0Tkm4OdB9E4BsmXM3SnMlRFUrtp6IDpV2eKzdYvF3etm3KhQksbOLChGkSmcBdmcEwvqkrMy5BzL00NZeu3qPYJOOuCc+5NjcWKXQxFvTa3NoXJ4d8in7fiAUuTt781dkvuHX4K8AA2Usy7yNKLy0AAAAASUVORK5CYII=\n";
 
 /*!
  * escape-html
@@ -5358,14 +5307,14 @@ var meta = function(dom, data) {
       { appendHead(("    <meta name=\"" + name + "\" content=\"" + (index$1(content)) + "\" >\n")); }
   }
 
-  appendHead(("\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge,chrome=1\">\n    <link rel=\"icon\" type=\"image/png\" href=\"data:image/png;base64," + favicon + "\">\n    <link href=\"/rss.xml\" rel=\"alternate\" type=\"application/rss+xml\" title=\"Articles from Applied Data Science\">\n    <link rel=\"canonical\" href=\"" + (data.url) + "\">\n    <title>" + (data.title) + "</title>\n  "));
+  appendHead(("\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge,chrome=1\">\n    <link rel=\"icon\" type=\"image/png\" href=\"data:image/png;base64," + favicon + "\">\n    <link href=\"/rss.xml\" rel=\"alternate\" type=\"application/rss+xml\" title=\"Articles from Distill\">\n    <link rel=\"canonical\" href=\"" + (data.url) + "\">\n    <title>" + (data.title) + "</title>\n  "));
 
   appendHead(("\n    <!--  https://schema.org/Article -->\n    <meta property=\"article:published\" itemprop=\"datePublished\" content=\"" + (data.publishedYear) + "-" + (data.publishedMonthPadded) + "-" + (data.publishedDayPadded) + "\" />\n    <meta property=\"article:created\" itemprop=\"dateCreated\" content=\"" + (data.publishedDate) + "\" />\n    <meta property=\"article:modified\" itemprop=\"dateModified\" content=\"" + (data.updatedDate) + "\" />\n  "));
   data.authors.forEach(function (a) {
     appendHtml(head, ("\n      <meta property=\"article:author\" content=\"" + (a.firstName) + " " + (a.lastName) + "\" />"));
   });
 
-  appendHead(("\n    <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->\n    <meta property=\"og:type\" content=\"article\"/>\n    <meta property=\"og:title\" content=\"" + (data.title) + "\"/>\n    <meta property=\"og:description\" content=\"" + (data.description) + "\">\n    <meta property=\"og:url\" content=\"" + (data.url) + "\"/>\n    <meta property=\"og:image\" content=\"" + (data.previewURL) + "\"/>\n    <meta property=\"og:locale\" content=\"en_US\" />\n    <meta property=\"og:site_name\" content=\"Applied Data Science\" />\n  "));
+  appendHead(("\n    <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->\n    <meta property=\"og:type\" content=\"article\"/>\n    <meta property=\"og:title\" content=\"" + (data.title) + "\"/>\n    <meta property=\"og:description\" content=\"" + (data.description) + "\">\n    <meta property=\"og:url\" content=\"" + (data.url) + "\"/>\n    <meta property=\"og:image\" content=\"" + (data.previewURL) + "\"/>\n    <meta property=\"og:locale\" content=\"en_US\" />\n    <meta property=\"og:site_name\" content=\"Distill\" />\n  "));
 
   appendHead(("\n    <!--  https://dev.twitter.com/cards/types/summary -->\n    <meta name=\"twitter:card\" content=\"summary_large_image\">\n    <meta name=\"twitter:title\" content=\"" + (data.title) + "\">\n    <meta name=\"twitter:description\" content=\"" + (data.description) + "\">\n    <meta name=\"twitter:url\" content=\"" + (data.url) + "\">\n    <meta name=\"twitter:image\" content=\"" + (data.previewURL) + "\">\n    <meta name=\"twitter:image:width\" content=\"560\">\n    <meta name=\"twitter:image:height\" content=\"295\">\n  "));
 
@@ -5458,7 +5407,7 @@ function citation_meta_content(ref){
 }
 
 var html$1 = "";
-/*var html$1 = "\n<style>\n  dt-banner {\n    background: #FFF59D;\n    display: block;\n    text-align: center;\n    color: black;\n    height: 70px;\n    line-height: 70px;\n  }\n</style>\n<div>This article is a draft, awaiting review for publication in Applied Data Science</div>\n";*/
+/*var html$1 = "\n<style>\n  dt-banner {\n    background: #FFF59D;\n    display: block;\n    text-align: center;\n    color: black;\n    height: 70px;\n    line-height: 70px;\n  }\n</style>\n<div>This article is a draft, awaiting review for publication in Distill</div>\n";*/
 
 var banner = function(dom, data) {
   var banner = dom.createElement("dt-banner");
@@ -6137,22 +6086,20 @@ var appendix = function(dom, data) {
       newHTML = newHTML + "<h3>References</h3><dt-bibliography></dt-bibliography>";
     }
 
-      /*newHTML = newHTML + "<h3>Citation</h3><dt-citation></dt-citation>";*/
-
     var div = el.querySelector("div.l-body");
     div.innerHTML = userHTML + newHTML;
   }
 
 };
 
-var appendixAppliedDataScience = function(dom, data) {
+var appendixDistill = function(dom, data) {
   var el = dom.querySelector('dt-appendix > div');
   if (el) {
     var newHTML = "";
 
-      /*newHTML += "<h3>Updates and Corrections</h3>\n    <p><a href=\"" + (data.githubCompareUpdatesUrl) + "\">View all changes</a> to this article since it was first published. If you see a mistake or want to suggest a change, please <a class=\"github-issue\" href=\"" + (data.githubUrl) + "/issues/new\">create an issue on GitHub</a>.</p>";*/
+    newHTML += "<h3>Updates and Corrections</h3>\n    <p><a href=\"" + (data.githubCompareUpdatesUrl) + "\">View all changes</a> to this article since it was first published. If you see a mistake or want to suggest a change, please <a class=\"github-issue\" href=\"" + (data.githubUrl) + "/issues/new\">create an issue on GitHub</a>.</p>";
 
-    newHTML += "<h3 id=\"citation\">Citations and Reuse</h3>\n    <p>All content is licensed under Creative Commons Attribution <a href=\"https://creativecommons.org/licenses/by/2.0/\">CC-BY 2.0</a>, unless otherwise noted.</p>\n\n    <p>For attribution in academic contexts, please cite this work as</p>\n    <pre class=\"citation short\">" + (data.concatenatedAuthors) + ", \"" + (data.title) + "\", Applied Data Science, " + (data.publishedYear) + "." /*FIXME+ "http://doi.org/" + (data.doi)*/ + "</pre>\n\n    <p>BibTeX citation</p>\n<pre class=\"citation long\">@article{" + (data.slug) + ",\n  author = {" + (data.bibtexAuthors) + "},\n  title = {" + (data.title) + "},\n  journal = {Applied Data Science},\n  year = {" + (data.publishedYear) + "}\n}</pre>"; //FIXME:,\n  url = {" + (data.url) + "},\n  doi = {" + (data.doi) + "}\n}</pre>";
+    newHTML += "<h3 id=\"citation\">Citations and Reuse</h3>\n    <p>Diagrams and text are licensed under Creative Commons Attribution <a href=\"https://creativecommons.org/licenses/by/2.0/\">CC-BY 2.0</a>, unless noted otherwise, with the <a class=\"github\" href=\"" + (data.githubUrl) + "\">source available on GitHub</a>. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: “Figure from …”.</p>\n\n    <p>For attribution in academic contexts, please cite this work as</p>\n    <pre class=\"citation short\">" + (data.concatenatedAuthors) + ", \"" + (data.title) + "\", " + (data.journal.title) + ", " + (data.publishedYear) + ". http://doi.org/" + (data.doi) + "</pre>\n\n    <p>BibTeX citation</p>\n<pre class=\"citation long\">@article{" + (data.slug) + ",\n  author = {" + (data.bibtexAuthors) + "},\n  title = {" + (data.title) + "},\n  journal = {" + (data.journal.title) + "},\n  year = {" + (data.publishedYear) + "},\n  url = {" + (data.url) + "},\n  doi = {" + (data.doi) + "}\n}</pre>";
 
     var existingHTML = el.innerHTML;
     el.innerHTML = existingHTML + newHTML;
@@ -6173,7 +6120,7 @@ var citation = function(dom, data) {
       return a.author.localeCompare(b.author);
     });
   }*/
-  
+
   var appendCiteHoverDiv = (function() {
     function nodeFromString(str) {
       var div = dom.createElement("div");
@@ -16623,7 +16570,7 @@ function escape(html, encode) {
 }
 
 function unescape(html) {
-	// explicitly match decimal, hex, and named HTML entities 
+	// explicitly match decimal, hex, and named HTML entities
   return html.replace(/&(#(?:\d+)|(?:#x[0-9A-Fa-f]+)|(?:\w+));?/g, function(_, n) {
     n = n.toLowerCase();
     if (n === 'colon') { return ':'; }
@@ -17442,7 +17389,7 @@ if (Prism.languages.markup) {
 			alias: 'language-css'
 		}
 	});
-	
+
 	Prism.languages.insertBefore('inside', 'attr-value', {
 		'style-attr': {
 			pattern: /\s*style=("|').*?\1/i,
@@ -18222,7 +18169,7 @@ function xml(obj) {
 
 var logo = "<svg viewBox=\"-607 419 64 64\">\n  <path d=\"M-573.4,478.9c-8,0-14.6-6.4-14.6-14.5s14.6-25.9,14.6-40.8c0,14.9,14.6,32.8,14.6,40.8S-565.4,478.9-573.4,478.9z\"/>\n</svg>\n";
 
-var html$4 = "\n<style>\ndt-header {\n  display: block;\n  position: relative;\n  height: 60px;\n  background-color: hsl(200, 60%, 15%);\n  width: 100%;\n  box-sizing: border-box;\n  z-index: 2;\n  color: rgba(0, 0, 0, 0.8);\n  border-bottom: 1px solid rgba(0, 0, 0, 0.08);\n  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);\n}\ndt-header .content {\n  height: 70px;\n}\ndt-header a {\n  font-size: 16px;\n  height: 60px;\n  line-height: 60px;\n  text-decoration: none;\n  color: rgba(255, 255, 255, 0.8);\n  padding: 22px 0;\n}\ndt-header a:hover {\n  color: rgba(255, 255, 255, 1);\n}\ndt-header svg {\n  width: 24px;\n  position: relative;\n  top: 4px;\n  margin-right: 2px;\n}\n@media(min-width: 1080px) {\n  dt-header {\n    height: 70px;\n  }\n  dt-header a {\n    height: 70px;\n    line-height: 70px;\n    padding: 28px 0;\n  }\n  dt-header .logo {\n  }\n}\ndt-header svg path {\n  fill: none;\n  stroke: rgba(255, 255, 255, 0.8);\n  stroke-width: 3px;\n}\ndt-header .logo {\n  font-size: 17px;\n  font-weight: 200;\n}\ndt-header .nav {\n  float: right;\n  font-weight: 300;\n}\ndt-header .nav a {\n  font-size: 12px;\n  margin-left: 24px;\n  text-transform: uppercase;\n}\n</style>\n\n<div class=\"content l-page\">\n  <a href=\"/\" class=\"logo\">\n    " + logo + "\n    Applied Data Science\n  (DRAFT: DO NOT SHARE)</a>\n  <div class=\"nav\">\n    " /*FIXME<a href=\"/about/\">About</a>\n    <a href=\"/prize/\">Prize</a>\n    <a href=\"/journal/\">Submit</a>\n*/ +"  </div>\n</div>\n";
+var html$4 = "\n<style>\ndt-header {\n  display: block;\n  position: relative;\n  height: 60px;\n  background-color: hsl(200, 60%, 15%);\n  width: 100%;\n  box-sizing: border-box;\n  z-index: 2;\n  color: rgba(0, 0, 0, 0.8);\n  border-bottom: 1px solid rgba(0, 0, 0, 0.08);\n  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);\n}\ndt-header .content {\n  height: 70px;\n}\ndt-header a {\n  font-size: 16px;\n  height: 60px;\n  line-height: 60px;\n  text-decoration: none;\n  color: rgba(255, 255, 255, 0.8);\n  padding: 22px 0;\n}\ndt-header a:hover {\n  color: rgba(255, 255, 255, 1);\n}\ndt-header svg {\n  width: 24px;\n  position: relative;\n  top: 4px;\n  margin-right: 2px;\n}\n@media(min-width: 1080px) {\n  dt-header {\n    height: 70px;\n  }\n  dt-header a {\n    height: 70px;\n    line-height: 70px;\n    padding: 28px 0;\n  }\n  dt-header .logo {\n  }\n}\ndt-header svg path {\n  fill: none;\n  stroke: rgba(255, 255, 255, 0.8);\n  stroke-width: 3px;\n}\ndt-header .logo {\n  font-size: 17px;\n  font-weight: 200;\n}\ndt-header .nav {\n  float: right;\n  font-weight: 300;\n}\ndt-header .nav a {\n  font-size: 12px;\n  margin-left: 24px;\n  text-transform: uppercase;\n}\n</style>\n\n<div class=\"content l-page\">\n  <a href=\"/\" class=\"logo\">\n    " + logo + "\n    Distill\n  </a>\n  <div class=\"nav\">\n    <a href=\"/about/\">About</a>\n    <a href=\"/prize/\">Prize</a>\n    <a href=\"/journal/\">Submit</a>\n  </div>\n</div>\n";
 
 var header = function(dom, data) {
   var el = dom.querySelector("dt-header");
@@ -18236,7 +18183,7 @@ var header = function(dom, data) {
   }
 };
 
-var html$5 = "\n<style>\ndt-footer {\n  display: block;\n  color: rgba(255, 255, 255, 0.4);\n  font-weight: 300;\n  padding: 40px 0;\n  border-top: 1px solid rgba(0, 0, 0, 0.1);\n  background-color: hsl(200, 60%, 15%);\n  text-align: center;\n}\ndt-footer .logo svg {\n  width: 24px;\n  position: relative;\n  top: 4px;\n  margin-right: 2px;\n}\ndt-footer .logo svg path {\n  fill: none;\n  stroke: rgba(255, 255, 255, 0.8);\n  stroke-width: 3px;\n}\ndt-footer .logo {\n  font-size: 17px;\n  font-weight: 200;\n  color: rgba(255, 255, 255, 0.8);\n  text-decoration: none;\n  margin-right: 6px;\n}\ndt-footer .nav {\n  margin-top: 12px;\n}\ndt-footer .nav a {\n  color: rgba(255, 255, 255, 0.8);\n  margin-right: 6px;\n}\n</style>\n\n<div class=\"l-page\">\n  <div class=\"description\">\n  <a href=\"/\" class=\"logo\">\n    " + logo + "\n    Applied Data Science\n  </a>\n  is dedicated to real world examples of data science\n  </div>\n  <div class=\"nav\">\n    " /*FIXME<a href=\"http://applieddatascience.pub/about/\">About</a>\n    <a href=\"http://applieddatascience.pub/journal/\">Submit</a>\n    <a href=\"http://applieddatascience.pub/prize/\">Prize</a>\n    <a href=\"http://applieddatascience.pub/archive/\">Archive</a>\n    <a href=\"http://applieddatascience.pub/rss.xml\">RSS</a>\n    <a href=\"https://github.com/applieddatasciencepub\">GitHub</a>\n    <a href=\"https://twitter.com/applieddatasciencepub\">Twitter</a>\n    &nbsp;&nbsp;&nbsp;&nbsp; ISSN 2476-0757\n*/ +"  </div>\n</div>\n";
+var html$5 = "\n<style>\ndt-footer {\n  display: block;\n  color: rgba(255, 255, 255, 0.4);\n  font-weight: 300;\n  padding: 40px 0;\n  border-top: 1px solid rgba(0, 0, 0, 0.1);\n  background-color: hsl(200, 60%, 15%);\n  text-align: center;\n}\ndt-footer .logo svg {\n  width: 24px;\n  position: relative;\n  top: 4px;\n  margin-right: 2px;\n}\ndt-footer .logo svg path {\n  fill: none;\n  stroke: rgba(255, 255, 255, 0.8);\n  stroke-width: 3px;\n}\ndt-footer .logo {\n  font-size: 17px;\n  font-weight: 200;\n  color: rgba(255, 255, 255, 0.8);\n  text-decoration: none;\n  margin-right: 6px;\n}\ndt-footer .nav {\n  margin-top: 12px;\n}\ndt-footer .nav a {\n  color: rgba(255, 255, 255, 0.8);\n  margin-right: 6px;\n}\n</style>\n\n<div class=\"l-page\">\n  <div class=\"description\">\n  <a href=\"/\" class=\"logo\">\n    " + logo + "\n    Distill\n  </a>\n  is dedicated to clear explanations of machine learning\n  </div>\n  <div class=\"nav\">\n    <a href=\"http://distill.pub/about/\">About</a>\n    <a href=\"http://distill.pub/journal/\">Submit</a>\n    <a href=\"http://distill.pub/prize/\">Prize</a>\n    <a href=\"http://distill.pub/archive/\">Archive</a>\n    <a href=\"http://distill.pub/rss.xml\">RSS</a>\n    <a href=\"https://github.com/distillpub\">GitHub</a>\n    <a href=\"https://twitter.com/distillpub\">Twitter</a>\n    &nbsp;&nbsp;&nbsp;&nbsp; ISSN 2476-0757\n  </div>\n</div>\n";
 
 var footer = function(dom, data) {
   var el = dom.querySelector("dt-footer");
@@ -18269,7 +18216,6 @@ function renderOnLoad(dom, data) {
   footnote(dom, data);
   typeset(dom, data);
   hoverBox(dom, data);
-   applieddatascienceify(dom, data); 
 }
 
 // If we are in a browser, render automatically...
@@ -18297,19 +18243,19 @@ function render$1(dom, data) {
   renderImmediately(dom);
   renderOnLoad(dom, data);
   // Remove script tag so it doesn't run again in the client
-  var s = dom.querySelector('script[src*="applieddatascience.pub/template"]');
+  var s = dom.querySelector('script[src*="distill.pub/template"]');
   if (s) { s.parentElement.removeChild(s); }
 }
 
-// Applied Data Science specific rendering
-function applieddatascienceify(dom, data) {
+// Distill specific rendering
+function distillify(dom, data) {
   header(dom, data);
-  appendixAppliedDataScience(dom, data);
+  appendixDistill(dom, data);
   footer(dom, data);
 }
 
 exports.render = render$1;
-exports.applieddatascienceify = applieddatascienceify;
+exports.distillify = distillify;
 exports.generateCrossref = generateCrossref;
 
 Object.defineProperty(exports, '__esModule', { value: true });
