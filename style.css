@@ -47,6 +47,7 @@ h2.post-tag {
     margin-bottom: 24px;
     position: relative;
     max-width: 500px;
+    display: none;
 }
 
 .posts-list .post-preview.editorial .thumbnail {
@@ -98,13 +99,14 @@ h2.post-tag {
 
     .posts-list .post-preview .thumbnail {
         float: right;
-        width: 35%;
+        width: 15%;
         margin-bottom: 0;
+        display: block;
     }
 
     .posts-list .post-preview .description {
         float: left;
-        width: 40%;
+        width: 60%;
     }
 
     .posts-list .post-preview .metadata {
