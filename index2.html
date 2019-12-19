@@ -1,0 +1,288 @@
+<!doctype html>
+<meta charset="utf-8">
+<script src="../template.js"></script>
+<script type="text/javascript" async src=img/"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['\\(','\\)']]}
+});
+</script>
+
+<script type="text/front-matter">
+  title: "Modelling the Weighted Feature Composition of Fashion550k Using Facial Recognition Libraries"
+  publishedDate: 2019-12-19
+  description: "Description of the post"
+  authors:
+  - Molly Ferguson: 
+  affiliations:
+  - Mathematics Major, Class of 2020, Scripps College
+</script>
+
+<dt-article>
+<h1>Gender and Racial Bias Observed in the Popular fashion144k and fashion550k Datasets</h1>
+<p>
+<strong>tl;dr</strong>
+The fashion144k and fashion550k datasets are the primary public datasets used for applying machine 
+learning to fashion, and these datasets have been instrumental in the development of essentially all 
+existing fashion tools. Using facial recognition algorithms, I show for the first time that both of these 
+datasets are strongly biased towards white women in composition, and thus all existing fashion tools which depend 
+on these datasets, essentially all existing fashion tools, are biased against men and non-white minorities. I show also
+that the fashion rankings assigned to the fashion144k dataset are biased against non-white men. 
+</p>
+
+<dt-byline></dt-byline>
+
+<h2>Overview</h2>
+<p>
+The <a href='https://esslab.jp/~ess/en/data/fashion144k/'>fashion144k dataset</a> 
+is comprised of more than 144 thousand user images 
+and is widely used in academic and personal research 
+<dt-cite key='SimoSerraCVPR2015'></dt-cite>. 
+The <a href='https://esslab.jp/~ess/en/data/fashion550k/'>fashion550k dataset</a>
+is a similar but larger dataset which is comprised of around 550 thousand user 
+images <dt-cite key='InoueICCVW2017'></dt-cite>. The goal of this project was to determine the racial and gender 
+composition of the fashion550k dataset <dt-fn>This project was born from my interest in exploring the racial bias present
+in the fashion industry through the racial composition of the people in promotional images on various United States 
+clothing retailers. I intended to use website scraping software to pull all images present on retailers websites and 
+run the face_classification project mentioned later on these images to determine whether brands are hiring a number of 
+clothing models of each race proportional to the number of images containing models of that race. I was also interested to
+see if various brands' claims to diversity hold up. Though this did not ultimitaly end up possible, based on the direction 
+this project has taken I am interested to attempt to train computational models on images from retail websites to determine 
+what racial and fashion biases they emerge with. I hypothesize that a narrow presence of models of color on retail sites
+leads fashion algorithms to punitively score diversity and perpetuates the lack of diversity present on clothing retail sites</dt-fn>.
+</p>
+<p>
+At the outset of this project I already had access to the complete datasets
+through this course. In the case of the fashion144k dataset this consisted of images and associated metadata 
+<dt-fn>fashion144k metadata consists of the photos themselves, location data for where the image was taken, and a fashionability 
+score assigned to each image by the original creators of the dataset. In this project I use the images and their associated
+fashionability score.</dt-fn> while the fashion550k dataset was comprised only of images. 
+In order to accomplish the goal being able to both understand and to visualize
+the composition of fashion550k, I ran multiple facial and attribute recognition 
+libraries on the images in the dataset and I applied several facial recognition 
+solutions to analyze this dataset including the python projects
+<a href='https://face-recognition.readthedocs.io/en/latest/index.html'>face_recognition</a><dt-cite key='geitegey2018facerecognition'></dt-cite>
+and <a href='https://github.com/wondonghyeon/face-classification'>face-classification</a><dt-cite key='won2018faceclassification'></dt-cite>
+<dt-fn>Each of these projects consists of a pretrained model and a number of functions which may be called on new images.
+The face_recognition model was build using dlib, and the face_classification model was trained on the LFWA+ dataset. 
+face_recognition has a 99.38% accuracy in differentiating faces in the Labeled Faces in the Wild dataset, a dataset generally
+used as a benchmark in facial recognition libraries.</dt-fn>. 
+These techniques assisted in reaching several conclusions, including: 
+<a href=#data>racial bias in composition across gender</a>, 
+<a href=#fashionabilitycorrellation>racial bias in assigned fashion score across gender</a>, and 
+<a href=#modelerrorestimation>racial bias in locating faces</a>. 
+Elaborations on each of these conclusions and the associated analysis may be found later in this article, 
+though technical breakdowns will be saved largely for the footnotes.
+</p>
+<p>
+Recognizing that the models which I am employing make broad generalizations 
+surrounding race and gender, I will be referring to faces which this model 
+assigns a specific attribute to as having an encoding of that attribute, ie. 
+a face which this model classifies as male and white will be referred to as a 
+white male encoding. I will refer to general faces as encodings.
+</p>
+
+<a name=data></a>
+<h2>The Data</h2>
+<p>
+I modified the existing pred.py gender and race prediction file withing face_classification to return information matching 
+an image file to the facial encodings found in it, to the predicted gender and race, to image files containing
+matching encodings, as well as counts of all unique facial encodings found of each gender, race pair. 
+I used the matplotlib python library to visualize the data returned by running this program on subsets of 
+both the fashion144k and fashion550k datasets. In the plots below, we see the composition of both fashion144k and fashion550k 
+compared to real world data<dt-cite key='uscensus'></dt-cite>. 
+</p>
+<img class=l-body src=img/figure_1.png>
+<p>
+We see on the Y axis three different datasets, the world population, fashion144k, 
+and fashion550k, each broken up into the Male and Female categorites. On the X axis we see 
+the Fraction of the Dataset made up by each of these categories. From this plot we are easily able to discern that 
+in both fashion144k and fashion550k, female encodings found in images appear disproportionately often compared to
+male encodings when compared with real world percentages<dt-fn>I note here that the United States Census data shown in 
+each graph in this section is not indicative of the worldwide racial balance. The data used should be considered a placeholder
+to offer some sense of scale. The fashion144k and fashion550k datasets are both composed of images from around the globe.</dt-fn>.
+</p>
+<img class=l-body src=img/figure_2.png>
+<p>
+In the above graph, on the Y axis we see the same three datasets, each broken up into the the three 
+races which face_classification is able to identify. 
+On the X axis we see the Fraction of Male Encodings in each dataset made up by each of these categories. We see that 
+white men are overrepresented in both fashion144k and fashion550k compared to US Census data, and that black men are 
+underrepresented.
+</p>
+<img class=l-body src=img/figure_3.png>
+<p>
+The above graph is identical in composition to the previous graph except that the X axis show the Fraction of 
+Female Encodings made up by each racial category. We see the same patterns discussed above in the makeup of Female encodings, 
+with the underrepresentation of black women in both fashion144k and fashion550k even more pronounced.
+</p>
+<p>
+We see that encodings of women appear most often in images in  this dataset, with over 90% of encodings 
+found in a 50% sampling of Fashion144k<dt-fn>About 72,000 images.</dt-fn> and over 90% of encodings found in a 30% sampling 
+of Fashion550k<dt-fn>About 150,000 images.</dt-fn> classified as women. We see that in both datasets, 
+white women make up over 70% of this majority. 
+It is also interesting to note that while the racial imbalance seen in Male encodings and in Female encodings
+trend the same way, the ratio of racial encodings within the two genders is quite different in both fashion144k 
+and fashion550k.
+</p>
+
+<a name=fashionabilitycorrellation></a>
+<h3>Fashion Score Correllation</h3>
+<p>
+As previously stated, the fashion144k dataset has fashionability scores associated with each image. Using face_recognition 
+and face_classification I was able to match each image to an associated gender, race, and fashionability score.
+</p>
+<img class=l-body src=img/figure_6.png>
+<p>
+The above details the spread of fashionability scores by gender and race. Looking at the X axis which indicates a fashionability score
+between 1 and 10, we are able to see that while the spreads are different,
+the median fashionability score for all female encodings and white male encodings occur in the same general area. 
+However, the median fashionability score for black men and asian men is considerably lower. In particular, the spread for 
+images with asian male encodings is particularly low on the scale.
+</p>
+
+<a name=modelerrorestimation></a>
+<h3>Model Error Estimation</h3>
+<p>
+In using a pretrained model, it was imperative to have some method of estimating the error expected from each step
+<dt-fn>An important error that is well publicized for the face_recognition project is that the model 
+is trained on adults is not reliable for images of children. However, fashion144k and fashion550k contains a low percentage of 
+images of  children, and this error is likely not significant in this instance. However, face_recognition 
+documentation indicates that this error is more prevalent that acceptable at the default tolerance setting of 0.6, 
+where children tend to be confused with one another by the model. This is indicative of how the face_recognition 
+model handles images not resembling those it was trained on, producing more matches between facial encodings than 
+exist. Due to the higher than expected frequency of certain facial encodings matches within fashion550k, I conjecture 
+and plan to further investigate whether these encodings differ in some way from those the model was trained on.</dt-fn>.
+</p>
+<p>
+The first cause of error which I will discuss is likely the largest source. The face-classification model I 
+employ in this research is trained on the LFWA+ dataset<dt-cite key='liu2015faceattributes'></dt-cite>, 
+and the face_recognition project is based on models trained on a dataset of about 3 million 
+images<dt-cite key='king2017dlibcplusplus'></dt-cite>, 
+many of which were personally gathered by the author. While the model used by face_recognition 
+has proven very accurate (99.38% on the 
+<a href='http://vis-www.cs.umass.edu/lfw/'>Labeled Faces in the Wild</a> dataset) 
+both the face-classification project and my own additional feature 
+selection rely on this model, compounding any errors resulting from using the face_recognition model
+on images it was not trained on. Additionally, this error accounts only for identifying a 
+match between two faces, not missing an existing face or finding one that does not exist in an image. 
+</p>
+<p>
+In the below graph, the ratios of faces expected:faces located is indicative of the largest error introduced by 
+face_recognition and is likely a result of the different training models from this test set. This data was 
+generated from a sampling of 100 images from fashion550k which I provided human “metadata” for<dt-fn>In order to provide 
+metadata for these images, I individually clicked through and assigned gender and race markers to each image as well as
+noting other features from the image such as glasses, hats, or a hairstyle which partially conceals the face. I then 
+ran a miniature version of my modified face_classification project on these 100 images which produced a mapping from 
+the name of the file to the number of faces found in the image and the race and gender encoding assigned to that face.
+I compared the information returned by the modified face_classification to my own collected metadata for each image and
+tracked for each race, gender encoding pair a number of factors including correct race and gender identifications, 
+incorrectly assigned identifications, missed faces in images, and for each of the previously mentioned other features,
+I tracked the frequency that faces with these features were located and correcly identified, and the frequency
+with which these faces were missed.</dt-fn>. 
+</p>
+<img class=l-body src=img/figure_4.png>
+<p>
+In the above graph, we see the percentage of images with a certain feature which are classified as a certain race and gender 
+that are correctly classified. For example, % Correct with Glasses indicates that out of all images which have glasses on the face and 
+which are classified as Female and White, 100% are correcly classified. We see that face_classification is very good at correcly 
+identifying white female encodings even with distorting features, but misidentifies half of asian female encoding faces with 
+distorting features. We also see that more asian female encodings are misidentified as other races, and more encodings of other races
+are misidentified as asian and female than white and female.
+</p>
+<img class=l-body src=img/figure_5.png>
+<p>
+In this second graph, we see that while a greater percentage of images with white, female encodings are not located by face_recognition,
+those images which are missed and contain asian, female encodings are more likely to have distorting features such as glasses
+or a turned head. We conclude from these two graphs that both face_recognition and face_classification are unable to compensate 
+for distorting accessories or features when identifying images with asian, female encodings present. 
+</p>
+<img class=l-body src=img/7642292667-7642292667_400.jpg>
+<p>
+The face in the above image was not located by the libraries I used for facial recognition.
+</p>
+<img class=l-body src=img/6803143270-6803143270_400.jpg>
+<p>
+The face in the above image was classified as a white, female encoding by the libraries I used for facial recognition.
+</p>
+<img class=l-body src=img/6231558987-6231558987_400.jpg>
+<p>
+The face in the above image was classified as an asian, male encoding by the libraries I used for facial recognition.
+</p>
+
+
+<a name=conclusion></a>
+<h2>Conclusion</h2>
+<p>
+The fashion industry is racially biased, and the algorithms used in fashion related machine learning are not improving the situation.
+In this article, I used easily accessible facial recognition libraries to determine that the primary public datasets
+used in fashion related machine learning research, fashion144k and fashion550k, are racially and gender biased in composition
+and model function. Additionally I showed the potential for biased error and specific instances of errors even within the libraries I
+used to determine the bias of these datasets. 
+</p>
+<p>
+I look forward to continuing to explore the impact of biased training sets on machine learning research in fashion.
+There is a great deal of work remaining in this area. If you have any questions, feel free to reach out to me at mferguso5512@scrippscollege.edu.
+</p>
+
+</dt-article>
+
+<dt-appendix>
+</dt-appendix>
+
+<script type="text/bibliography">
+
+@InProceedings{SimoSerraCVPR2015,
+  author    = {Edgar Simo-Serra and Sanja Fidler and Francesc Moreno-Noguer and Raquel Urtasun},
+  title     = {{Neuroaesthetics in Fashion: Modeling the Perception of Fashionability}},
+  booktitle = "Proceedings of the Conference on Computer Vision and Pattern Recognition (CVPR)",
+  year      = 2015,
+}
+
+@InProceedings{InoueICCVW2017,
+   author    = {Naoto Inoue and Edgar Simo-Serra and Toshihiko Yamasaki and Hiroshi Ishikawa},
+   title     = {{Multi-Label Fashion Image Classification with Minimal Human Supervision}},
+   booktitle = "Proceedings of the International Conference on Computer Vision Workshops (ICCVW)",
+   year      = 2017,
+}
+
+@article{geitegey2018facerecognition,
+    title={face_recognition Documentation},
+    author={Geitgey, Adam},
+    journal={Python Software Foundation},
+    year={2018},
+    url={https://pypi.org/project/face_recognition/}
+  }
+
+@article{won2018faceclassification,
+    title={face_classification Documentation},
+    author={Won, Donghyeon},
+    journal={GitHub},
+    year={2018},
+    url={https://github.com/wondonghyeon/face-classification}
+  }
+  
+@article{uscensus,
+    title={United States Census Quick Facts},
+    author={US Government},
+    journal={Census.gov},
+    year={2018},
+    url={https://www.census.gov/quickfacts/fact/table/US/PST045218}
+  }
+
+@inproceedings{liu2015faceattributes,
+ title = {Deep Learning Face Attributes in the Wild},
+ author = {Liu, Ziwei and Luo, Ping and Wang, Xiaogang and Tang, Xiaoou},
+ booktitle = {Proceedings of International Conference on Computer Vision (ICCV)},
+ month = {December},
+ year = {2015} 
+ }
+ 
+@article{king2017dlibcplusplus,
+    title={High Quality Face Recognition with Deep Metric Learning},
+    author={King, Davis},
+    journal={blog.dlib},
+    year={2017},
+    url={http://blog.dlib.net/2017/02/high-quality-face-recognition-with-deep.html}
+  }
+</script>
