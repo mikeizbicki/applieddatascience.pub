@@ -1,0 +1,157 @@
+<!doctype html>
+<meta charset="utf-8">
+<script src="https://datainsights.pub/template.js"></script>
+
+<script type="text/front-matter">
+  title: "Reddit's leftward political bias"
+  publishedDate: 2019-12-20
+  description: "I combined data from the reddit API and AllSides Media to measure the political bias of six popular political subreddits.  I found that the supposedly neutral r/politics is significantly more left-leaning than the explicitly left-leaning subreddits r/democrats and r/liberal, and that subreddits actually became less polarized during the 2016 presidential election."
+  authors:
+  - Conrad Tyler: mailto:ctyler@students.pitzer.edu
+  affiliations:
+  - Mathematics, Pitzer College: https://www.pitzer.edu/academics/field-groups/mathematics/
+</script>
+
+<dt-article>
+<h1>Reddit's leftward political bias</h1>
+<p>
+<strong>tl;dr</strong>
+I combined data from the reddit API and AllSides Media to measure the political bias of six popular political subreddits.
+I found that the supposedly neutral r/politics is significantly more left-leaning than the explicitly left-leaning subreddits r/democrats and r/liberal,
+but that political bias has not been increasing over time.
+
+<!--
+I used Python scripts and various numerical techniques to analyze the posts on six political subreddits over the past 12 years.
+I conclude there is no evidence for increasing political polarization from these subreddits, r/politics is a strongly left-leaning subreddit, 
+and political posts dramatically increase near election time.
+-->
+</p>
+
+<dt-byline></dt-byline>
+
+<h2>Overview</h2>
+<!--
+<p>
+The political climate in the United States has shifted dramatically in the 21st century.
+Members on both sides of the political spectrum claim that U.S. politics are becoming increasingly polarized.
+In the era of fake news and media bias, it is more important now than ever to examine the actual data.
+</p>
+-->
+<p>
+The general sentiment is that political discussion has become increasingly polarized in recent years,
+especially on social media sites like reddit.
+To test this hypothesis, 
+I examined 6 popular political subreddits
+(<a href=https://www.reddit.com/r/politics/>r/politics</a>,
+<a href=https://www.reddit.com/r/worldpolitics/ >r/worldpolitics</a>,
+<a href=https://www.reddit.com/r/democrats/ >r/democrats</a>,
+<a href=https://www.reddit.com/r/liberal/ >r/liberal</a>,
+<a href=https://www.reddit.com/r/republican/ >r/republican</a>,
+and
+<a href=https://www.reddit.com/r/conservative/ >r/conservative</a>)<dt-fn>I used the data dumps available at <a href='https://files.pushshift.io/reddit/'>https://files.pushshift.io/reddit</a>.</dt-fn>.
+I looked for trends in the number of posts per month and measured the bias of posts using data from AllSides media.
+</p>
+
+<!--
+From general media sentiment of late it's tempting to conclude that people on either end of the political spectrum are becoming more extreme in their views.
+<a href='https://files.pushshift.io/reddit/'>All Reddit data</a> is readily accessible online thanks to <a href='https://pushshift.io/'>pushshift.io</a>,
+so the goal of this project was to write a Python program to automatically analyze aspects of the following six major political subreddits:
+<a href=https://www.reddit.com/r/politics/>r/politics</a>,
+<a href=https://www.reddit.com/r/worldpolitics/ >r/worldpolitics</a>,
+<a href=https://www.reddit.com/r/democrats/ >r/democrats</a>,
+<a href=https://www.reddit.com/r/liberal/ >r/liberal</a>,
+<a href=https://www.reddit.com/r/republican/ >r/republican</a>,
+and
+<a href=https://www.reddit.com/r/conservative/ >r/conservative</a>.
+</p>
+-->
+
+<h2> Trends in Posting Activity </h2>
+<p>
+This first plot shows the total number of posts each month for the six subreddits.<dt-fn>Reddit was founded in 2005, but the first political subreddit r/politics was created in August 2007.  
+    Therefore, the plot begins at this date.
+</dt-fn>
+The subreddits are stacked based on founding date, with the youngest subreddits on the bottom. 
+</p>
+
+
+<img class=l-body src=NumberPosts.PNG>
+<p>
+Large spikes in the graph correspond to the US presidential elections of 2008, 2012, and 2016.
+There was relatively little political posting in the non-election timeperiods before President Trump was elected;
+but since his election,
+political posting has remained high.
+</p>
+<!--
+<p>
+The posts per month plot shows how r/politics was the first of the subreddits examined, and it remains dominant in post contributions after the creation of the other five subreddits.
+The large spikes on the graph typically correspond to the October of election years (2008, 2012, 2016), as politically active redditors increasingly post leading up to the November elections.
+The relative contribution of the smaller subreddits dramatically increases in these pre-election times. 
+r/conservative contributions begin to climb after Obama begins his second presidential term in January of 2012. 
+A big spike in March of 2016 corresponds to the Iowa caucuses and reflects the heated presidential race at the time.
+After Donald Trump is elected in November of 2016, r/worldpolitics experienced dramatic increases in numbers of posts, perhaps due to Trump's aggressive foreign policy strategies.
+</p>
+-->
+
+<h2>Bias in Subreddits</h2>
+<p>
+To measure the political bias of subreddits,
+I used the <a href='https://www.allsides.com/media-bias/media-bias-ratings'>AllSides media bias ratings</a>. 
+This dataset labels domains on a scale from "strongly left" to "strongly right" leaning.
+I converted these labels into numbers using the following conversion table:
+</p>
+<table width=50% style='width:30%;'>
+    <tr>
+        <td><strong>bias label</strong></td>
+        <td><strong>political leaning number</strong></td>
+    </tr>
+    <tr><td>strongly left</td><td>-2</td></tr>
+    <tr><td>left</td><td>-1</td></tr>
+    <tr><td>neutral</td><td>0 </td></tr>
+    <tr><td>right</td><td>1 </td></tr>
+    <tr><td>strongly right</td><td>2 </td></tr>
+</table>
+<p>
+Then for each url in each subreddit, I assigned it the corresponding political leaning number.
+</p>
+<p>
+<!--Then for each For each post to a subreddit,-->
+<!--I assigned a "political leaning" number according to the following table:-->
+<!--A bias score of -2 represents "strongly left", -1 "left", 0 "neutral", 1 right, 2 for strongly right.-->
+The plot below shows a three-month moving average of the political leaning of links in each subreddit.
+</p>
+
+<img class=l-body src=PoliticalLeaning.png>
+
+<p>
+What stands out most about the political leaning of linked media is how much more left-leaning the media links from r/politics posts are compared to the other subreddits. 
+r/politics is often criticized for claiming to accept all political values while actually being a hub for liberal views, and this graph supports such notion.
+Leading up to the 2016 election, all non-GOP subreddits generally shifted more conservative, while r/conservative and r/republican became more left-leaning.
+This may reflect political parties linking news websites associated with the opposite party, in order to criticize the bias of said party before an election.
+</p>
+
+
+<h2>Conclusion</h2>
+<p>
+The political leaning of linked media in the six political subreddits studied has not become more extreme over time. 
+In fact, it has historically been less extreme during elections,
+and is currently on a moderating trend as we approach the 2020 election season.
+</p>
+<p>
+The frequency of posts, however, has increased dramatically recently.
+This may account for the public perception of increased extremism.
+</p>
+
+<!--
+<p>
+I hypothesized that political polarization would be increasing over time, especially since the 2016 presidential election.
+However, all the subreddits analyzed do not seem to be following a trend of increasing polarity, at least in terms of the political bias of linked media.
+While this analysis only examined a few communities on one website, it may speak to the importance of analyzing data before buying into media claims. 
+</p>
+-->
+
+</dt-article>
+
+
+<dt-appendix>
+</dt-appendix>
