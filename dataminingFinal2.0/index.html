@@ -1,0 +1,320 @@
+<!doctype html>
+<meta charset="utf-8">
+<script src="http://datainsights.pub/template.js"></script>
+<!--<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
+<!--<script type="text/x-mathjax-config">-->
+<!--MathJax.Hub.Config({-->
+  <!--tex2jax: {inlineMath: [['\\(','\\)']]}-->
+<!--});-->
+<!--</script>-->
+<!--
+<style>
+p {
+  margin: 35px 180px 50px;
+  font-size: 20px;
+}
+
+h2{
+  margin: 15px 70px 50px;
+}
+
+h1{
+  margin: 15px 70px 50px;
+}
+
+</style>
+-->
+<script type="text/front-matter">
+  title: "Bread and Circuses"
+  description: "CS 145 Project"
+  publishedDate: 2019-12-18
+  authors:
+  - Jacob Adolphe: mailto:JAdolphe21@students.claremontmckenna.edu
+  affiliations:
+  - Computer Science and Economics, Claremont McKenna College: https://cmc.edu/
+</script>
+
+<dt-article>
+<h1>Mass violence associated with fewer sports tweets</h1>
+<p>
+<strong> tl;dr </strong>
+I used the large-scale GDELT 2.0 dataset to measure the correlation between mass violence and sports tweets.
+<!--I observed a negative correlation-->
+<!--Findings show that a rise in negative news articles may have a negative effect on sports tweets. However, the findings are inconclusive.-->
+I found a negative correlation, which can likely be explained by seasonal variation in both sports tweeting and violence.
+</p>
+
+<dt-byline></dt-byline>
+
+<h2> The Inspiration </h2>
+
+
+<!--<p> Our world is incredibly interconnected; we are constantly bombarded with news, good and bad, from all over the world. With so much violent news, I wondered if we sought out distractions to the global crisies that seem to always be occuring.-->
+
+
+<p> The saying <a href=https://en.wikipedia.org/wiki/Bread_and_circuses>Bread and Circuses</a> refers to Roman leaders keep the public distracted from politics with sports events like chariot races and gladiator competitions.
+I hypothesized that a similar system exists today,
+and in particular that increasing violence in the world would result in more tweets about sports as people try to distract themselves from the violence.
+</p>
+<p>
+In this article, I test this "twitter bread and circuses" hypothesis and show it to be false.
+</p>
+
+<!--
+<h2> The Problem </h2>
+
+<p> There are a vast number of tweets that are sent out every second from all over the world. It would be impossible to any person to read through all the tweets
+and classify them as sports related or not. Further, we are constantly receiving news from dozens to hundreds of outlets from around the world. The purpose of this project
+is to write a program to automatically analyze the relationship between news and sports. </p>
+-->
+
+<h2> The Data </h2>
+<p>
+There are two datasets for this project: a Twitter dataset and a events dataset.
+</p>
+<p>To generate the Twitter dataset, I first began with all geotagged tweets sent between 26 October 2017 and 29 August 2019.<dt-fn>A geotagged tweet is a tweet that contains the GPS coordinates the tweet was sent from.  Twitter users must opt-in to geotagging their tweets in their privacy settings, and only about 1% of all tweets are geotagged in this way.  We use this range of tweets because they are made available with <dt-cite key=izbicki2019geolocating></dt-cite>.</dt-fn>
+In total, approximately 3 billion tweets are in this initial dataset.
+I then created my dataset by extracting only those tweets mentioning sports-related keywords, such as ESPN and NCAA.<dt-fn>
+<!-- The twitter data was pulled from a server using a python script that searched for specific keywords in the each tweet. Initially,
+I was going to include player names; however I figured there would be enough overlap between the keywords above and player names that it wouldn't be worth
+the time. For example a tweet about Steph Curry will probably include the word 'baskeball' or 'nba' or 'golden state warriors' -->
+All keywords include: Atlanta Hawks, Boston Celtics, Brooklyn Nets, Charlotte Bobcats, Chicago Bulls, Cleveland Cavaliers, Dallas Mavericks, Denver Nuggets, Detroit Pistons, Golden State Warriors, Houston Rockets, Indiana Pacers, LA Clippers, LA Lakers, Memphis Grizzlies, Miami Heat, Milwaukee Bucks, Minnesota Timberwolves, New Orleans Hornets, New York Knicks, Oklahoma City Thunder, Orlando Magic, Philadelphia Sixers, Phoenix Suns, Portland Trail Blazers, Sacramento Kings, San Antonio Spurs, Toronto Raptors, Utah Jazz, Washington Wizards, Arizona Cardinals, Atlanta Falcons, Baltimore Ravens, Buffalo Bills, Carolina Panthers, Chicago Bears, Cincinnati Bengals, Cleveland Browns, Dallas Cowboys, Denver Broncos, Detroit Lions, Green Bay Packers, Houston Texans, Indianapolis Colts, Jacksonville Jaguars, Kansas City Chiefs, Los Angeles Chargers, Los Angeles Rams, Miami Dolphins, Minnesota Vikings, New England Patriots, New Orleans Saints, New York Giants, New York Jets, Oakland Raiders, Philadelphia Eagles, Pittsburgh Steelers, San Francisco 49ers, Seattle Seahawks, Tampa Bay Buccaneers, Tennessee Titans, Washington Redskins, Atlanta Braves, Miami Marlins, New York Mets, Philadelphia Phillies, Washington Nationals, Chicago Cubs, Cincinnati Reds, Milwaukee Brewers, Pittsburgh Pirates, St. Louis Cardinals, Arizona Diamondbacks, Colorado Rockies, Los Angeles Dodgers, San Diego Padres, San Francisco Giants, Baltimore Orioles, Boston Red Sox, New York Yankees, Tampa Bay Rays, Toronto Blue Jays, Chicago White Sox, Cleveland Indians, Detroit Tigers, Kansas City Royals, Minnesota Twins, Houston Astros, Los Angeles Angels, Oakland Athletics, Seattle Mariners, Texas Rangers, Anaheim Ducks, Arizona Coyotes, Boston Bruins, Buffalo Sabres, Calgary Flames, Carolina Hurricanes, Chicago Blackhawks, Colorado Avalanche, Columbus Blue Jackets, Dallas Stars, Detroit Red Wings, Edmonton Oilers, Florida Panthers, Los Angeles Kings, Minnesota Wild, Montreal Canadiens, Nashville Predators, New Jersey Devils, New York Islanders, New York Rangers, Ottawa Senators, Philadelphia Flyers, Pittsburgh Penguins, San Jose Sharks, St. Louis Blues, Tampa Bay Lightning, Toronto Maple Leafs, Vancouver Canucks, Vegas Golden Knights, Washington Capitals, Winnipeg Jets, Atlanta United FC, Chicago Fire, Colorado Rapids, Columbus Crew SC, D.C. United, FC Dallas, Houston Dynamo, LA Galaxy, Los Angeles FC, Minnesota United FC, Montreal Impact, New England Revolution, New York City FC, New York Red Bulls, Orlando City SC, Philadelphia Union, Portland Timbers, Real Salt Lake, San Jose Earthquakes, Seattle Sounders FC, Sporting Kansas City, Toronto FC, Vancouver Whitecaps FC, nfl, nba, mlb, nhl, football, basketball, hockey, sport, espn, mls, soccer, wnba.
+</dt-fn>
+In total, the final dataset contained 27,295,723 sports related tweets.
+</p>
+
+
+<p>
+I used the GDELT 2.0 dataset <dt-cite key = 'gdelt'> </dt-cite> for my events.<dt-fn>The GDELT dataset was pulled from the GDELT project website. I used the online query tool to download every instance of a Code 20 article since 2008. There were a few technical limitations,
+I was only able to pull 10,000 articles at once with the online query tool so I made around 25 different querys to gather my full dataset. In retrospect, I didn't use the data before 2017 so I spent a lot of
+time gathering data I didn't need. </dt-fn>
+    GDELT is the "most comprehensive database of human society ever created", containing more than 1.5 billion events that are updated in real time.
+I filtered down the GDELT data to include only events involving mass violence<dt-fn>
+    GDELT seperate events into categories called Conflict and Mediation Event Observation (CAMEO) event codes. These codes range from least violent, Code 1 = public statement, and most violent Code 20 = Use of Unconvential Violence.
+    I focused only events with CAMEO code 20.
+    </dt-fn> during the same time period as the tweets.
+There was a total of 45,556 such events.
+</p>
+
+<p>
+The following two charts show the number of tweets and GDELT events per day.
+</p>
+
+
+
+<img class=l-body src="fincomp.jpg">
+
+
+<p>
+Every tweet and every GDELT event in these datasets has a GPS coordinate associated with it corresponding to where the tweet was sent from or where the event occurred.<dt-fn> There are some drawbacks of using this Twitter data.
+    There are very few tweets out of China, the most populous country in the world. This is because China doesn't really use twitter,
+they use a different microblogging website called Weibo. Further, the dataset is limited by the keywords I chose. I focused on tweets regarding the main American sports leagues, teams and sports. There will be overlap
+with other countries becasue I looked for keywords such as "football" and "soccer". </dt-fn>
+These tweets and events are located all over the world, as seen in the following plot.
+</p>
+
+<img class=l-body src=mapfin2.jpg>
+<!--<iframe width="1000" height="600" src="finalglobe.html" style="border:none;"></iframe>-->
+
+
+
+<h2> Effect of violence on tweeting </h2>
+<p> To measure the effect of violent events on sports tweets, I trained a linear regression model.<dt-fn> For all of my model training I used the caret R package <dt-cite key = 'caret'> </dt-cite></dt-fn>
+
+   The independent variable was the number of GDELT events per day and the dependent variable was the number of sports related tweets.
+   This simple regression shows that an increase in the number of violent events corresponds to a slight decrease in the number of tweets about sports, as seen in the following plot:</p><dt-fn>The inital single regression model had an R-squared value of ~.05 depending on the random dataset used for training </dt-fn>
+
+<img class=l-body src="plot1.jpg" >
+
+<!--A single increase in news articles is correlated with a decrease of around 33 tweets per day. This model only explains 5% of the variablity in the data.-->
+
+<p> As we can see from this plot, we have a few outliers, there was one day with zero tweets about sports<dt-fn>The day without any tweets about sports is likely due to a bug in the processing code.</dt-fn> and there were two days with over 400 violent events<dt-fn>The days with many violent events is due to reports of ethnic cleansing in Myanmar around November 22, 2017.</dt-fn>.
+</p>
+<p>
+Removing these outliers, we get the following plot,
+which maintains the negative trend line.
+</p>
+<img class=l-body src="plot2.jpg">
+<p>
+This negative relationship between the number of GDELT events and tweets about sports is the opposite of my original hypothesis predicted!
+</p>
+<!--
+<p>
+I removed the outliers from the dataset and retrained the linear model on the cleaned dataset.
+This new model is more accurate, explaining 10% of the variation in the dataset
+<dt-fn>The second single regression model had an R-squared value of ~.10 </dt-fn>
+. Further, this new model finds that
+that a single unit increase in violent news articles results in a 52 tweet decrease in sports tweets. </p>
+
+ <p> In order to improve the accuracy of the linear model I added several more dimensions in an attempt to reduce the bayes error and increased the number of datapoints in my training set to reduce the estimation error. </p>
+-->
+
+<h2> Finding Confounders </h2>
+
+<p>
+A <a href=https://en.wikipedia.org/wiki/Confounding>confounding variable</a> is an unobserved variable that influences both the dependent and independent variables of a regression.
+I suspected a confounding variable caused the negative relationship observed above, and I set out to find it.
+</p>
+
+<p>
+To find the confounders, I decided to add more dependent variables to the regression.
+I included indicator variables for NFL, NHL, MLB, and NBA seasons,
+as well as 7 "lag variables"<dt-fn>The NFL, NHL, MLB, and NBA seasons were coded with binary variables, 1 meaning in season 0 meaning not in season. The lag variables represent the number of GDELT articles from the lag number of periods before, for example
+the fourth lag variable contains the number of GDELT articles from 4 days before the actual date in the corresponding date column.  </dt-fn>.
+I retrained the model, and the regression coefficients are shown in the following plot:
+</p>
+
+<img class=l-body src=coef2.jpg>
+<p>
+What this plot indicates is that the greatest predictor of whether there is a large number of tweets is whether it is currently NFL season.
+</p>
+<!--
+<p> Luckily the GDELT project dataset had already extracted valuable information from the news articles it collected
+
+  <dt-fn>I added 13 additional dimensions to the data: 7 lags representing the news cycle, total tone of articles for the day, average tone of the articles for the day (calculated by dividing total tone by number of articles per day), and binary variables representing the NFL, NBA, NHL, and MLB seasons.
+ </dt-fn>.
+
+  One of the data fields was the tone of the article, the tone metric ranges from -100 to +100 with negative values representing negative tone and a positive value representing a positive tone.</p>
+
+  <p> I hypothesized that a negative article
+tone would further depress the number of tweets about sports based on the previous model's analysis. So I added total tone for the day, the thought is that in people are bombarded with many articles with negative tones they would tweet less, I also added the average article tone to my new model.
+<dt-fn>Adding average and total tone to the model allows me to view the effect of the GDELT dataset on the number of tweets holding the average and total tone constant.
+</dt-fn>.
+
+ Further, since I believe tweets about sports may be seasonal and the number of fans for each American sports league differs, I added the seasons of each major sports league.
+ <dt-fn>Adding binary variables representing each sports season allows me to view the effect of the GDELT dataset on the number of tweets holding the the value of the sports seasons constant.
+ </dt-fn>.
+<p>Finally, based on an article from NeimanLab, I estimated that the news cycle for these events is seven days. <dt-cite key = 'neiman'> </dt-cite>As such, I lagged the GDELT dataset seven times to see how the past week's news articles affected the present number of tweets.
+
+For final analysis, I took the
+log of the number of tweets to estimate the percentage change of the independent variable. The plot below shows the results of the improved model </p>
+
+ <img src="plot2.jpg" width="800" height="650" style="margin: 35px 180px 50px;" alt="first">
+
+<p>I found that a single increase in violent news articles results in a 1/10% decrease in tweets about sports. The greatest statistically significat driver behind tweets was the NFL
+which, when in season, tweets about sports increased by 5%.  </p>
+<dt-fn>
+I performed a log transformation of the dependent variable to estimate the percentage change of the dependent variable controlling for the predictors. I did this transformation using the 'log1p' function in R.
+</dt-fn>
+-->
+
+
+
+
+
+
+
+<!--
+<h2> Can we do better? </h2>
+
+<p>For the previous models, I used a simple linear model. The basic linear model weights all of the predictive values equally, this means there is room for improvement. <dt-cite key = 'scikit'> </dt-cite>In the CS145 course
+we learned about three more extensions to linear models: lasso, ridge, and bridge. Lasso models essentially gets rid of the irrelevant predictive values. Ridge regressions add bias to the estimates in hope of reducing errors. The bridge regression makes the coefficents less volatile by weighting them towards zero.
+I ran the dataset on each of the three additional models and determined that the ridge model was the most accurate as it had the lowest error, off by ~5800 tweets compared to 6000 from the linear model.
+
+<dt-fn>
+R calculated an optimal lambda value of 0.1 for the ridge model
+</dt-fn>
+-->
+
+<h2>Conclusion </h2>
+
+
+<!--
+<p> While the relationship between violent news and tweets about sports was very small, the final model is 99% sure that the number of violent news articles
+  has an negative effect on the number sports tweets. Although a 1/10% of change in tweet volume from an additional violent news article may seem insignificant, one must consider the vast scale of both datasets. There are approximately 500 million tweets sent per day around the world and GDELT has 3.2 trillion datapoints in its system.
+  <dt-fn>
+  Tweet information from class, GDELT information from gdeltproject.org
+</dt-fn>
+</p>
+-->
+
+<p>
+
+The negative relationship could be explained by the relationship between violent crime and outside temperature. Studies have shown that more violence occurs during the warmer months of the year <dt-cite key = 'crime'> </dt-cite>. Since the NFL season increases the number of tweets sent during the colder months of the year (September to Feburary), we observe more tweets during less violent time periods. Further study could include searching for more keywords focusing on international sports teams to reduce the effect of American sports seasonality.
+</p>
+
+
+
+</dt-article>
+
+<dt-appendix>
+
+  <h2> Technical Appendix </h2>
+
+
+
+
+
+
+
+
+
+
+
+</dt-appendix>
+
+
+
+
+<script type="text/bibliography">
+  @article{Bread_and_circuses,
+    title={Bread and Circuses},
+    author={},
+    journal={Wikipedia},
+    year={},
+    url={https://en.wikipedia.org/wiki/Bread_and_circuses}
+  }
+
+  @article{mike,
+    title={CSCI145 / MATH166: Data Mining},
+    author={Mike Izbicki },
+    journal={},
+    year={2019},
+    url={https://github.com/mikeizbicki/cmc-csci145-math166}
+  }
+  @article{gdelt,
+    title={The GDELT Project},
+    author={},
+    journal={website},
+    year={},
+    url={http://gdeltproject.org}
+  }
+  @article{caret,
+    title={R caret Package},
+    author={Max Kuhn, Jed Wing, Steve Weston, Andre Williams, Chris Keefer, Allan Engelhardt, Tony Cooper, Zachary Mayer, Brenton Kenkel, the R Core Team, Michael Benesty, Reynald Lescarbeau, Andrew Ziem, Luca Scrucca, Yuan Tang, Can Candan, and Tyler Hunt},
+    journal={},
+    year={2019},
+    url={http://topepo.github.io/caret/index.html}
+  }
+
+  @article{neiman,
+    title={A typical big news story in 2018 lasted about 7 days (until we moved on to the next crisis)},
+    author={Laura Hazard Owen},
+    journal={},
+    year={2019},
+    url={https://www.niemanlab.org/2019/01/a-typical-big-news-story-in-2018-lasted-about-7-days-until-we-moved-on-to-the-next-crisis/}
+  }
+
+  @article{scikit,
+    title={scikit learn},
+    author={Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., Blondel, M., Prettenhofer, P., Weiss, R., Dubourg, V., Vanderplas, J., Passos, A., Cournapeau, D., Brucher, M., Perrot, M. and Duchesnay, E},
+    journal={},
+    year={2011},
+    url={https://scikit-learn.org}
+  }
+
+  @article{crime,
+    title={A Time Series Analysis of Associations between Daily Temperature and Crime Events in Philadelphia, Pennsylvania},
+    author={Leah H. Schinasi, Ghassan B. Hamra},
+    journal={Journal of Urban Health, 2017},
+    year={2017},
+    url={https://link.springer.com/article/10.1007%2Fs11524-017-0181-y}
+  }
+@article{izbicki2019geolocating,
+  title={Geolocating Tweets in any Language at any Location},
+  author={Mike Izbicki and Vaglis Papalexakis and Vassilis Tsotras},
+  journal={CIKM},
+  year={2019}
+}
+
+</script>
